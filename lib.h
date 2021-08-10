@@ -8,6 +8,9 @@
 #include <string>
 #include <cstring>
 #include <fstream>
+
+
+
 class lib {
     private:
         // constants used often
@@ -62,6 +65,9 @@ class lib {
         // finds last instance of type in vector
         int last(std::string line, char x);
 
+        // converts string to char*
+        char* string_to_char_array(std::string line);
+
         // converts int to char
         char con(int x);
 
@@ -72,10 +78,21 @@ class lib {
         void rm_space(std::string& Line);
         void to_upper(std::string& line);
 
-        // file handling
+        // file and directory handling
         void opening_error(std::string file_name);
         void copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::string file);
         void write_lines_to_file(std::vector<std::string> lines, std::string file);
+        void write_line_to_file(std::string line, std::string file_name_or_path);
+            // copies the lines from one file to another file
+        void copy_lines_from_one_file_to_another(std::string source_file_name, std::string destination_file_name);
+        void copy_contents_from_one_directory_to_another(std::string source_directory_name_or_path, std::string destination_directory_name_or_path);
+        void make_these_files(std::vector<std::string> files_to_make);
+        void remove_these_files(std::vector<std::string> files_to_remove);
+        void make_these_directories(std::vector<std::string> directories_to_make);
+        void remove_these_directories(std::vector<std::string> directories_to_remove);
+
+        // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
+        // the string, everything after the string, or replace the string itself
         void search_for_and_replace_string_in_vector_with_options(std::vector<std::string>& lines, 
                                                             std::string to_find, 
                                                             std::string replacement, 
@@ -85,7 +102,10 @@ class lib {
         std::string copy_file_to_cur_dir_to_open (std::string absolute_path);
 
         // copies file back to the directory it came from
-        void copy_file_back_to_original_directory (std::string absolute_path);    
+        void copy_file_back_to_original_directory (std::string absolute_path);  
+
+        // turns a vector of strings into one continuous string, can choose to have spaces inbetween the indicies of the vector, true if you want spaces
+        std::string vector_to_string(std::vector<std::string> to_convert, bool spaces);  
 };
 
 #endif

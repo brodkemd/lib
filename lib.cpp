@@ -16,14 +16,14 @@ void lib::print(int x) {
 //prints each element of the vector
 void lib::print(std::vector<std::string> line) {
     for (std::string it : line) {
-        std::cout << it << std::endl;
+        std::cout << "\t" << it << std::endl;
     }
 }
 
 void lib::print(std::vector<std::vector<std::string>> in){
     for(std::vector<std::string> i : in){
         for(std::string j : i){
-            std::cout << j << "\t";
+            std::cout << "\t" << j << std::endl;
         }
         std::cout << std::endl;
     }
@@ -201,7 +201,7 @@ void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::str
     lib inst;
 
     // letting use know what is happening
-    inst.print("Copying lines from: " + file_name_or_path);
+    //inst.print("Copying lines from: " + file_name_or_path);
 
     // copying the file to this directory if the user provided the path
     std::string file = inst.copy_file_to_cur_dir_to_open(file_name_or_path);
@@ -298,6 +298,162 @@ void lib::write_lines_to_file(std::vector<std::string> lines, std::string file_n
     }
 }
 
+// string to char pointer
+char* lib::string_to_char_pointer(std::string line){
+    // SIZE defined in the header file
+    char to_return[100];
+    
+    // assigns each character in the string to a character in the array
+    for (int i = 0; i < line.length(); i++) {
+        to_return[i] = line[i];
+    
+    }
+    
+    std::cout << "char pointer: " << to_return << std::endl;
+
+    return to_return;
+}
+
+// writes the inputted string to the file with name that is also inputted, can provide the absolute path of the file
+void lib::write_line_to_file(std::string line, std::string file_name_or_path){
+
+    // instance of library
+    lib inst;
+
+    // informing the user what is happening
+    inst.print("writing lines to file: " + file_name_or_path);
+
+    std::ofstream write;
+
+    // opening the file
+    write.open(file_name_or_path);
+
+    // making sure the file open
+    if(write.is_open()){
+        // writes the line to file
+        write << line;
+
+    }
+    else{
+        // if the file fails to open inform the user and stop the program
+        opening_error(file_name_or_path);
+    }
+
+    // closing the file
+    write.close();
+}
+
+
+// turns a vector of strings into one continuous string, can choose to have spaces inbetween the indicies of the vector, true if you want spaces
+std::string lib::vector_to_string(std::vector<std::string> to_convert, bool spaces){
+    // string that is returned
+    std::string output;
+
+    // iterates throughthe vector and appends all the members
+    for (std::string it : to_convert){
+        // appending
+        output+=it;
+
+        // adding spaces if specified by the user
+        if (spaces){
+            output += " ";
+        }
+    }
+    return output;
+}
+
+// copies the lines from one file to another file
+void lib::copy_lines_from_one_file_to_another(std::string source_file_name, std::string destination_file_name){
+    // empty vectors to store the lines from each file
+    std::vector<std::string> lines_in_source_file;
+
+    // instance of this library
+    lib inst;
+
+    // copies lines of the source file to its corresponding vector
+    inst.copy_lines_of_file_to_vector(lines_in_source_file, source_file_name);
+
+    // writes the lines of the source file to the destination file
+    inst.write_lines_to_file(lines_in_source_file, destination_file_name);
+
+}
+
+// copies the contents of one directory to another
+void lib::copy_contents_from_one_directory_to_another(std::string source_directory_name_or_path, std::string destination_directory_name_or_path){
+    // instance of this library
+    lib inst;
+
+    //string that holds the commands to be excuted by the kernal
+    std::string copy_command;
+
+    // adding command, moves to source directory
+    copy_command = "cd " + source_directory_name_or_path;
+
+    // adding command, partial of the copy command
+    copy_command += "cp * ";
+    
+    // determines if a path was provided, if not it adds .. which gives a relative path for the copy command
+    // determines this by essentially checking to see if there is a / before directory name
+    if ((inst.first(destination_directory_name_or_path, '/') == destination_directory_name_or_path.length() - 1) || (inst.first(destination_directory_name_or_path, '/') == -1)){
+        // adding the ../ to the beginning of destination directory variable
+        destination_directory_name_or_path.insert(0, "../");
+    }
+
+    // adding rest of copy command
+    copy_command += destination_directory_name_or_path;
+    
+    inst.print("this is the copy command: " + copy_command);
+}
+
+// makes the files listed in the inputted vector
+void lib::make_these_files(std::vector<std::string> files_to_make){
+    // instance of this library
+    lib inst;
+
+    // string that stores the names of the files along with the bash command
+    std::string make_command = "touch " + inst.vector_to_string(files_to_make, true);
+
+    // running the command
+    //std::system(make_command);
+}
+
+// removes the files listed in the inputted vector
+void lib::remove_these_files(std::vector<std::string> files_to_remove){
+    // instance of this library
+    lib inst;
+
+    // string that stores the names of the files along with the bash command
+    std::string remove_command = "rm " + inst.vector_to_string(files_to_remove, true);
+
+    // running the command
+    //std::system(remove_command);
+}
+
+// makes the directories listed in the inputted vector
+void lib::make_these_directories(std::vector<std::string> directories_to_make){
+    // instance of this library
+    lib inst;
+
+    // string that stores the names of the files along with the bash command
+    std::string make_command = "mkdir " + inst.vector_to_string(directories_to_make, true);
+
+    // running the command
+    //std::system(make_command);
+}
+
+// removes the directories listed in the inputted vector
+void lib::remove_these_directories(std::vector<std::string> directories_to_remove){
+    // instance of this library
+    lib inst;
+
+    // string that stores the names of the files along with the bash command
+    std::string remove_command = "rm -r " + inst.vector_to_string(directories_to_remove, true);
+
+    // running the command
+    //std::system(remove_command);
+}
+
+
 // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
 // the string, everything after the string, or replace the string itself
 void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::string>& lines, 
@@ -308,39 +464,44 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
     lib inst;
     
     // informing the user what is happening
-    inst.print("searching for replacement");
+    //inst.print("searching for replacement");
     
     // temporary variable to store substrings of an element of the inputted vector
     std::string temp;
 
     // boolean that allows the nested loops to all be exited
-    bool exit = false;
+    //bool exit = false;
 
     // iterates through all the elements of the vector
     for (std::string& line : lines){
+
+        //inst.print("Line in vector: " + line);
 
         // checking to make sure the element is large than what is needs to be found
         if(line.length() >= to_find.length()){
             
             // iterating through the element
-            for(int i = 0; i < (line.length() - to_find.length()); i++){
+            for (int i = 0; i < (line.length() - to_find.length()); i++){
                 
                 // assigning substring of the line that is the same length as the string that needs to be found
                 temp = line.substr(i, to_find.length());
+
+                //inst.print("Temp: " + temp);
 
                 // if the substring is what needs to be found
                 if(temp == to_find){
 
                     // informing the use
-                    inst.print("found the string to replace: " + to_find);
+                    //inst.print("found the string to replace: " + to_find);
                     
                     // setting bool so after this iteration all loops will be exited
-                    exit = true;
+                    //exit = true;
 
                     // determining where to put the replacement string depending where the user specified
                     switch (option)
                     {
                     // if the replacement string needs to placed after the string that was found
+                    case 1:
                        // adding neccessary string// inserting the replacement string directly after the string that was found
                         for (int j = 0; j < replacement.length(); j++){
                             line.push_back(replacement[j]);
@@ -351,7 +512,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                     // if the replacement string needs to be replaced before the string that was found
                     case 0:
                         // informing the use
-                        inst.print("inserting at the beginning");
+                        //inst.print("inserting at the beginning");
 
                         // erasing all characters that come before the string that was found
                         line.erase(line.begin(), line.begin() + i);
@@ -366,7 +527,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                     // if the replacement string needs to replace the string that was found
                     case 2:
                         // informing the user
-                        inst.print("inserting by replacing");
+                        //inst.print("inserting by replacing");
 
                         // erasing the string that was found
                         line.erase(line.begin() + i, line.begin() + i + to_find.length());
@@ -382,7 +543,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                 }
 
                 // if this for loop should be exited
-                if (exit) break;
+                //if (exit) break;
             }
         }
         // if the element of the vector was not longer than the string that needs to be found, the for loop just increments
@@ -392,7 +553,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
         }
 
         // if this for loop should be exited
-        if(exit) break;
+        //if(exit) break;
     }
 }
 
