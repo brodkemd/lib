@@ -188,6 +188,14 @@ void lib::to_upper(std::string& line){
     }
 }  
 
+// clears the command_input char*
+void lib::clear_command_input(){
+    // instance of this library
+    lib inst;
+
+    //clearing the memory
+    memset(inst.command_input, 0, SIZE);
+}
 
 // prints whether there was an error opening a file or not
 void lib::opening_error(std::string file_name){
@@ -203,23 +211,11 @@ void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::str
     // letting use know what is happening
     //inst.print("Copying lines from: " + file_name_or_path);
 
-    // copying the file to this directory if the user provided the path
-    std::string file = inst.copy_file_to_cur_dir_to_open(file_name_or_path);
-
-    // boolean for indicating whether the absolute path was provided or not
-    bool path_provided = false;
-
-    // if the user inputted the absolute path
-    if (file_name_or_path != file){
-        // changing the bool indicator
-        path_provided = true;
-
-    }
     
     std::ifstream read;
     
     // opening the inputted file name
-    read.open(file);
+    read.open(file_name_or_path);
 
     // empty variable to copy lines of the file into
     std::string line;
@@ -237,16 +233,11 @@ void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::str
     }
     else{
         // if the file fails to open inform the user and stop the program
-        opening_error(file);
+        opening_error(file_name_or_path);
     }
     
     // closing the file
     read.close();
-
-    // if the path was provided by the user then send the file back where it came from
-    if (path_provided){
-        copy_file_back_to_original_directory(file_name_or_path);
-    }
 }
 
 // writes each column in the inputted vector to a line in the file with name that is also inputted, can provide the absolute path of the file
@@ -260,21 +251,8 @@ void lib::write_lines_to_file(std::vector<std::string> lines, std::string file_n
 
     std::ofstream write;
 
-    // copying the file to this directory if the user provided the path
-    std::string file = inst.copy_file_to_cur_dir_to_open(file_name_or_path);
-
-    // boolean for indicating whether the absolute path was provided or not
-    bool path_provided = false;
-
-    // if the user inputted the absolute path
-    if (file_name_or_path != file){
-        // changing the bool indicator
-        path_provided = true;
-
-    }
-
     // opening the file
-    write.open(file);
+    write.open(file_name_or_path);
 
     // making sure the file open
     if(write.is_open()){
@@ -286,32 +264,35 @@ void lib::write_lines_to_file(std::vector<std::string> lines, std::string file_n
     }
     else{
         // if the file fails to open inform the user and stop the program
-        opening_error(file);
+        opening_error(file_name_or_path);
     }
 
     // closing the file
     write.close();
 
-    // if the path was provided by the user then send the file back where it came from
-    if (path_provided){
-        copy_file_back_to_original_directory(file_name_or_path);
+}
+
+void lib::printCharArray(char *arr, size_t len)
+{
+    printf("arr: ");
+    for (size_t i = 0; i < len; ++i) {
+        printf("%c, ", arr[i]);
     }
+    printf("\n");
 }
 
 // string to char pointer
-char* lib::string_to_char_pointer(std::string line){
-    // SIZE defined in the header file
-    char to_return[100];
-    
-    // assigns each character in the string to a character in the array
-    for (int i = 0; i < line.length(); i++) {
-        to_return[i] = line[i];
-    
-    }
-    
-    std::cout << "char pointer: " << to_return << std::endl;
+void lib::string_to_char_pointer(std::string input_string){
+    // instance of this library
+    lib inst;
 
-    return to_return;
+    int i = 0;
+    // iterates through the string and assigns each element to each element in the global char*
+    for(char it : input_string){
+        inst.command_input[i] = it;
+        inst.print(it);
+        i++;
+    }
 }
 
 // writes the inputted string to the file with name that is also inputted, can provide the absolute path of the file
@@ -343,6 +324,20 @@ void lib::write_line_to_file(std::string line, std::string file_name_or_path){
     write.close();
 }
 
+// runs the inputted string as a command in terminal
+void lib::run_command(std::string command){
+    // instance of this library
+    lib inst;
+
+    // calling function to convert copy command to a char* for std::system
+    inst.string_to_char_pointer(command);
+    
+    // the copy_command was turned into a char* in the previous command call, command_input is gloabl variable
+    std::system(inst.command_input);
+
+    // clearing the global
+    inst.clear_command_input();
+}
 
 // turns a vector of strings into one continuous string, can choose to have spaces inbetween the indicies of the vector, true if you want spaces
 std::string lib::vector_to_string(std::vector<std::string> to_convert, bool spaces){
@@ -401,8 +396,12 @@ void lib::copy_contents_from_one_directory_to_another(std::string source_directo
 
     // adding rest of copy command
     copy_command += destination_directory_name_or_path;
-    
+
     inst.print("this is the copy command: " + copy_command);
+
+    // running the copy command
+    inst.run_command(copy_command);
+
 }
 
 // makes the files listed in the inputted vector
@@ -413,8 +412,8 @@ void lib::make_these_files(std::vector<std::string> files_to_make){
     // string that stores the names of the files along with the bash command
     std::string make_command = "touch " + inst.vector_to_string(files_to_make, true);
 
-    // running the command
-    //std::system(make_command);
+    // running the make command
+    inst.run_command(make_command);
 }
 
 // removes the files listed in the inputted vector
@@ -425,8 +424,8 @@ void lib::remove_these_files(std::vector<std::string> files_to_remove){
     // string that stores the names of the files along with the bash command
     std::string remove_command = "rm " + inst.vector_to_string(files_to_remove, true);
 
-    // running the command
-    //std::system(remove_command);
+    // running the remove command
+    inst.run_command(remove_command);
 }
 
 // makes the directories listed in the inputted vector
@@ -437,8 +436,8 @@ void lib::make_these_directories(std::vector<std::string> directories_to_make){
     // string that stores the names of the files along with the bash command
     std::string make_command = "mkdir " + inst.vector_to_string(directories_to_make, true);
 
-    // running the command
-    //std::system(make_command);
+    // running the make command
+    inst.run_command(make_command);
 }
 
 // removes the directories listed in the inputted vector
@@ -449,8 +448,8 @@ void lib::remove_these_directories(std::vector<std::string> directories_to_remov
     // string that stores the names of the files along with the bash command
     std::string remove_command = "rm -r " + inst.vector_to_string(directories_to_remove, true);
 
-    // running the command
-    //std::system(remove_command);
+    // running the remove command
+    inst.run_command(remove_command);
 }
 
 

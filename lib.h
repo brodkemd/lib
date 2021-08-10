@@ -8,8 +8,11 @@
 #include <string>
 #include <cstring>
 #include <fstream>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
-
+#define SIZE 100
 
 class lib {
     private:
@@ -20,6 +23,12 @@ class lib {
         const std::string param_upper_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public:
+        // pointer for assignment, usually used for std::system assignments
+        char command_input[SIZE];
+
+        // clear the above pointer
+        void clear_command_input();
+
         // returns the private constant pi
         double pi(){
             return param_pi;
@@ -66,7 +75,7 @@ class lib {
         int last(std::string line, char x);
 
         // converts string to char*
-        char* string_to_char_array(std::string line);
+        void string_to_char_pointer(std::string line);
 
         // converts int to char
         char con(int x);
@@ -106,6 +115,11 @@ class lib {
 
         // turns a vector of strings into one continuous string, can choose to have spaces inbetween the indicies of the vector, true if you want spaces
         std::string vector_to_string(std::vector<std::string> to_convert, bool spaces);  
+
+        // runs the inputted string as a command in terminal
+        void run_command(std::string command);
+
+        void printCharArray(char *arr, size_t len);
 };
 
 #endif
