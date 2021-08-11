@@ -1,5 +1,103 @@
-#include "lib.h"
+#include "../lib.h"
 
+// runs the inputted string as a command in terminal
+void lib::run_command(std::string command){
+    // determining the size of the command char* from the size of the string
+    int n = command.length();
+ 
+    // declaring character array
+    char char_array[n];
+ 
+    // copying the contents of the
+    // string to char array
+    strcpy(char_array, command.c_str());
+
+    /*for debugging
+    for (int i = 0; i < command.length(); i++)
+        std::cout << i << ":" << char_array[i] << " ";
+    */
+
+    // running the command in terminal
+    std::system(char_array);
+}
+
+// turns a vector of strings into one continuous string, can choose to have spaces inbetween the indicies of the vector, true if you want spaces
+std::string lib::vector_to_string(std::vector<std::string> to_convert, bool spaces){
+    // string that is returned
+    std::string output;
+
+    // iterates throughthe vector and appends all the members
+    for (std::string it : to_convert){
+        // appending
+        output+=it;
+
+        // adding spaces if specified by the user
+        if (spaces){
+            output += " ";
+        }
+    }
+    return output;
+}
+
+// converting functions
+// converts int to char
+char lib::con(int x) {
+    char y[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+    int i = 0;
+    while (x != i) {
+        i++;
+    }
+    return y[i];
+}
+
+// converts char to int
+int lib::con(char x) {
+    char y[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+    int i = 0;
+    while (x != y[i]) {
+        i++;
+    }
+    return i;
+}
+
+bool lib::within_tol(double num, double tol, double goal){
+    if(abs(abs(num) - abs(goal)) < tol){
+        return true;
+    }
+    return false;
+}
+
+// removes spaces
+void lib::rm_space(std::string& Line) {
+    std::string temp;
+
+    // scanning through the string
+    for (int i = 0; i < Line.size(); i++) {
+
+        // if there is not a space then it adds the character the string declared above
+        if (Line[i] != ' ') {
+            temp.push_back(Line[i]);
+        }
+    }
+
+    // assigns the original string to the filtered string, the original string is passed by
+    // reference so it is changed
+    Line = temp;
+}
+
+// converts string to upper case
+void lib::to_upper(std::string& line){
+    std::string alphabet_upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for(char& it : line){
+        for(char letter : alphabet_upper_case){
+            if(std::tolower(letter) == it){
+                it = letter;
+            }
+        }
+    }
+} 
+
+/*
 // prints, these are pretty straight forward
 void lib::print(std::string line) {
     std::cout << line << std::endl;
@@ -75,7 +173,9 @@ void lib::print(double x) {
 void lib::print(long x) {
     std::cout << x << std::endl;
 }
+*/
 
+/*
 // finds the position of the first instance of a char in a string, if no instance then returns the length of
 // the string
 int lib::first(std::string line, char x) {
@@ -129,74 +229,9 @@ int lib::first(std::vector<double> stor, double x) {
     }
     return -1;
 }
+*/
 
-// converting functions
-// converts int to char
-char lib::con(int x) {
-    char y[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-    int i = 0;
-    while (x != i) {
-        i++;
-    }
-    return y[i];
-}
-
-// converts char to int
-int lib::con(char x) {
-    char y[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-    int i = 0;
-    while (x != y[i]) {
-        i++;
-    }
-    return i;
-}
-
-bool lib::within_tol(double num, double tol, double goal){
-    if(abs(abs(num) - abs(goal)) < tol){
-        return true;
-    }
-    return false;
-}
-
-// removes spaces
-void lib::rm_space(std::string& Line) {
-    std::string temp;
-
-    // scanning through the string
-    for (int i = 0; i < Line.size(); i++) {
-
-        // if there is not a space then it adds the character the string declared above
-        if (Line[i] != ' ') {
-            temp.push_back(Line[i]);
-        }
-    }
-
-    // assigns the original string to the filtered string, the original string is passed by
-    // reference so it is changed
-    Line = temp;
-}
-
-// converts string to upper case
-void lib::to_upper(std::string& line){
-    std::string alphabet_upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    for(char& it : line){
-        for(char letter : alphabet_upper_case){
-            if(std::tolower(letter) == it){
-                it = letter;
-            }
-        }
-    }
-}  
-
-// clears the command_input char*
-void lib::clear_command_input(){
-    // instance of this library
-    lib inst;
-
-    //clearing the memory
-    memset(inst.command_input, 0, SIZE);
-}
-
+/*
 // prints whether there was an error opening a file or not
 void lib::opening_error(std::string file_name){
     std::cout << "Error opening: " << file_name << std::endl;
@@ -211,7 +246,6 @@ void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::str
     // letting use know what is happening
     //inst.print("Copying lines from: " + file_name_or_path);
 
-    
     std::ifstream read;
     
     // opening the inputted file name
@@ -272,29 +306,6 @@ void lib::write_lines_to_file(std::vector<std::string> lines, std::string file_n
 
 }
 
-void lib::printCharArray(char *arr, size_t len)
-{
-    printf("arr: ");
-    for (size_t i = 0; i < len; ++i) {
-        printf("%c, ", arr[i]);
-    }
-    printf("\n");
-}
-
-// string to char pointer
-void lib::string_to_char_pointer(std::string input_string){
-    // instance of this library
-    lib inst;
-
-    int i = 0;
-    // iterates through the string and assigns each element to each element in the global char*
-    for(char it : input_string){
-        inst.command_input[i] = it;
-        inst.print(it);
-        i++;
-    }
-}
-
 // writes the inputted string to the file with name that is also inputted, can provide the absolute path of the file
 void lib::write_line_to_file(std::string line, std::string file_name_or_path){
 
@@ -323,40 +334,9 @@ void lib::write_line_to_file(std::string line, std::string file_name_or_path){
     // closing the file
     write.close();
 }
+*/
 
-// runs the inputted string as a command in terminal
-void lib::run_command(std::string command){
-    // instance of this library
-    lib inst;
-
-    // calling function to convert copy command to a char* for std::system
-    inst.string_to_char_pointer(command);
-    
-    // the copy_command was turned into a char* in the previous command call, command_input is gloabl variable
-    std::system(inst.command_input);
-
-    // clearing the global
-    inst.clear_command_input();
-}
-
-// turns a vector of strings into one continuous string, can choose to have spaces inbetween the indicies of the vector, true if you want spaces
-std::string lib::vector_to_string(std::vector<std::string> to_convert, bool spaces){
-    // string that is returned
-    std::string output;
-
-    // iterates throughthe vector and appends all the members
-    for (std::string it : to_convert){
-        // appending
-        output+=it;
-
-        // adding spaces if specified by the user
-        if (spaces){
-            output += " ";
-        }
-    }
-    return output;
-}
-
+/*
 // copies the lines from one file to another file
 void lib::copy_lines_from_one_file_to_another(std::string source_file_name, std::string destination_file_name){
     // empty vectors to store the lines from each file
@@ -451,15 +431,16 @@ void lib::remove_these_directories(std::vector<std::string> directories_to_remov
     // running the remove command
     inst.run_command(remove_command);
 }
+*/
 
-
+/*
 // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
 // the string, everything after the string, or replace the string itself
 void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::string>& lines, 
                                                             std::string to_find, 
                                                             std::string replacement, 
-                                                            int option /* options: before = 0, after = 1, on = 2 */ ){
-    // instance of library
+                                                            int option /* options: before = 0, after = 1, on = 2 */ //){
+    /*// instance of library
     lib inst;
     
     // informing the user what is happening
@@ -555,7 +536,9 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
         //if(exit) break;
     }
 }
+*/
 
+/*
 // copies the file from the absolute path to the directory of the executing code, returns the the file name
 std::string lib::copy_file_to_cur_dir_to_open (std::string absolute_path) {
     // instance of library
@@ -662,3 +645,4 @@ void lib::copy_file_back_to_original_directory (std::string absolute_path) {
     // deleting the shell script
     std::system("rm temp.sh");
 }
+*/
