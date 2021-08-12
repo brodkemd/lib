@@ -1,4 +1,5 @@
 #include "../lib.h"
+
 // prints whether there was an error opening a file or not
 void lib::opening_error(std::string file_name){
     std::cout << "Error opening: " << file_name << std::endl;
@@ -209,32 +210,18 @@ std::string lib::copy_file_to_cur_dir_to_open (std::string absolute_path) {
 
     // checks to make sure the file does not exist in the current directory by looking for the / in the file name
     if (inst.first(absolute_path, '/') != -1){
-        // making a shell script file because it is easier to do it that way
-        std::system("touch temp.sh");
-
-        // adding needed items to a string
-        std::vector<std::string> input;
 
         // declaring neccessary string to be added to the vector
-        std::string temp = "cp ";
+        std::string command = "cp ";
         
         // adding the path of the file to the string
-        temp += absolute_path;
+        command += absolute_path;
 
         // adding a neccessary item to the string
-        temp += " `pwd`";
+        command += " `pwd`";
 
-        // adding string to vector
-        input.push_back(temp);
-
-        // running the string the terminal
-        inst.write_lines_of_vector_to_file(input, "temp.sh");
-
-        // running the shell script
-        std::system("bash temp.sh");
-
-        // deleting the shell script
-        std::system("rm temp.sh");
+        // running the string in terminal
+        inst.run_command(command);
 
         // finds last index of / to deternmine the file name
         int pos = inst.last(absolute_path, '/');
@@ -273,35 +260,25 @@ void lib::copy_file_back_to_original_directory (std::string absolute_path) {
     std::vector<std::string> input;
 
     // declaring neccessary string to be added to the vector
-    std::string temp = "cp ";
+    std::string command = "cp ";
 
     // adding the path of the file to the string
-    temp += file_name;
+    command += file_name;
 
     // adding a space
-    temp += " ";
+    command += " ";
 
     // adding a neccessary item to the string
-    temp += absolute_path;
+    command += absolute_path;
 
-    // adding string to vector
-    input.push_back(temp);
+    // adding ; to seperate commands
+    command += "; ";
 
     // adds line to the input vector that removes file from the current directory
-    temp = "rm " + file_name;
+    command += "rm " + file_name;
 
-    // adding to input vector
-    input.push_back(temp);
+    // running the command in terminal
+    inst.run_command(command);
 
-    // making a shell script file because it is easier to do it that way
-    std::system("touch temp.sh");
 
-    // running the string the terminal
-    inst.write_lines_of_vector_to_file(input, "temp.sh");
-
-    // running the shell script
-    std::system("bash temp.sh");
-
-    // deleting the shell script
-    std::system("rm temp.sh");
 }

@@ -1,6 +1,10 @@
 #include "lib.h"
 
+/* 
+* this file is for debugging/testing functions in the library
+*/
+
 int main(){
-  lib lib;
-  lib.copy_lines_from_one_file_to_another("temp", "temp1");
+  return 0;
+
 }
