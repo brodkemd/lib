@@ -81,11 +81,12 @@ int lib::first(std::vector<double> stor, double x) {
 
 
 // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
-// the string, everything after the string, or replace the string itself
+// the string, everything after the string, or replace the string itself 
+/* options: before = 0, after = 1, on = 2 */
 void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::string>& lines, 
                                                             std::string to_find, 
                                                             std::string replacement, 
-                                                            int option /* options: before = 0, after = 1, on = 2 */ ){
+                                                            int option){
     // instance of library
     lib inst;
     
@@ -94,9 +95,6 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
     
     // temporary variable to store substrings of an element of the inputted vector
     std::string temp;
-
-    // boolean that allows the nested loops to all be exited
-    //bool exit = false;
 
     // iterates through all the elements of the vector
     for (std::string& line : lines){
@@ -107,7 +105,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
         if(line.length() >= to_find.length()){
             
             // iterating through the element
-            for (int i = 0; i < (line.length() - to_find.length()); i++){
+            for (int i = 0; i <= (line.length() - to_find.length()); i++){
                 
                 // assigning substring of the line that is the same length as the string that needs to be found
                 temp = line.substr(i, to_find.length());
@@ -119,9 +117,6 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
 
                     // informing the use
                     //inst.print("found the string to replace: " + to_find);
-                    
-                    // setting bool so after this iteration all loops will be exited
-                    //exit = true;
 
                     // determining where to put the replacement string depending where the user specified
                     switch (option)
@@ -167,9 +162,6 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                     }
                     
                 }
-
-                // if this for loop should be exited
-                //if (exit) break;
             }
         }
         // if the element of the vector was not longer than the string that needs to be found, the for loop just increments
@@ -177,8 +169,5 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
             continue;
 
         }
-
-        // if this for loop should be exited
-        //if(exit) break;
     }
 }
