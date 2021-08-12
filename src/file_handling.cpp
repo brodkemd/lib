@@ -5,7 +5,7 @@ void lib::opening_error(std::string file_name){
 }
 
 // writes each column in the inputted vector to a line in the file with name that is also inputted, can provide the absolute path of the file
-void lib::write_lines_to_file(std::vector<std::string> lines, std::string file_name_or_path){
+void lib::write_lines_of_vector_to_file(std::vector<std::string> lines, std::string file_name_or_path){
 
     // instance of library
     lib inst;
@@ -115,7 +115,7 @@ void lib::copy_lines_from_one_file_to_another(std::string source_file_name, std:
     inst.copy_lines_of_file_to_vector(lines_in_source_file, source_file_name);
 
     // writes the lines of the source file to the destination file
-    inst.write_lines_to_file(lines_in_source_file, destination_file_name);
+    inst.write_lines_of_vector_to_file(lines_in_source_file, destination_file_name);
 
 }
 
@@ -128,7 +128,7 @@ void lib::copy_contents_from_one_directory_to_another(std::string source_directo
     std::string copy_command;
 
     // adding command, moves to source directory
-    copy_command = "cd " + source_directory_name_or_path;
+    copy_command = "cd " + source_directory_name_or_path + "; ";
 
     // adding command, partial of the copy command
     copy_command += "cp * ";
@@ -228,7 +228,7 @@ std::string lib::copy_file_to_cur_dir_to_open (std::string absolute_path) {
         input.push_back(temp);
 
         // running the string the terminal
-        inst.write_lines_to_file(input, "temp.sh");
+        inst.write_lines_of_vector_to_file(input, "temp.sh");
 
         // running the shell script
         std::system("bash temp.sh");
@@ -297,7 +297,7 @@ void lib::copy_file_back_to_original_directory (std::string absolute_path) {
     std::system("touch temp.sh");
 
     // running the string the terminal
-    inst.write_lines_to_file(input, "temp.sh");
+    inst.write_lines_of_vector_to_file(input, "temp.sh");
 
     // running the shell script
     std::system("bash temp.sh");
