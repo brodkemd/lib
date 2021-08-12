@@ -179,6 +179,18 @@ void lib::remove_these_files(std::vector<std::string> files_to_remove){
     inst.run_command(remove_command);
 }
 
+// removes the files listed in the inputted vector
+void lib::remove_these_files(std::string files_to_remove){
+    // instance of this library
+    lib inst;
+
+    // string that stores the names of the files along with the bash command
+    std::string remove_command = "rm " + files_to_remove;
+
+    // running the remove command
+    inst.run_command(remove_command);
+}
+
 // makes the directories listed in the inputted vector
 void lib::make_these_directories(std::vector<std::string> directories_to_make){
     // instance of this library
