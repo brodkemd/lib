@@ -82,7 +82,7 @@ int lib::first(std::vector<double> stor, double x) {
 
 // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
 // the string, everything after the string, or replace the string itself 
-/* options: before = 0, after = 1, on = 2 */
+// options: before = 0, after = 1, on = 2
 void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::string>& lines, 
                                                             std::string to_find, 
                                                             std::string replacement, 
