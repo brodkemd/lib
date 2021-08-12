@@ -109,13 +109,6 @@ class lib {
             void make_these_directories(std::vector<std::string> directories_to_make);
             void remove_these_directories(std::vector<std::string> directories_to_remove);
 
-            // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
-            // the string, everything after the string, or replace the string itself
-            void search_for_and_replace_string_in_vector_with_options(std::vector<std::string>& lines, 
-                                                                std::string to_find, 
-                                                                std::string replacement, 
-                                                                int option /* options: before = 0, after = 1, on = 2 */ );
-
             // returns file name
             std::string copy_file_to_cur_dir_to_open (std::string absolute_path);
 

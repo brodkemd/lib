@@ -46,12 +46,16 @@ void lib::search_for_and_replace_string_in_file_with_options(std::string file_na
     // vector to store contents of file
     std::vector<std::string> lines_in_file;
 
+    inst.print("copying");
     // copies the lines of a file into a vector
     inst.copy_lines_of_file_to_vector(lines_in_file, file_name_or_path);
 
+    inst.print("looking");
+    inst.print(lines_in_file);
     // searches for and replaces the to_find string with the replacement string in the vector of the file contents
     inst.search_for_and_replace_string_in_vector_with_options(lines_in_file, "he", "she", 2);
     
+    inst.print("writing");
     // writes the changed lines back to the file
     inst.write_lines_of_vector_to_file(lines_in_file, file_name_or_path);
 }
