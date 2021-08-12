@@ -11,8 +11,33 @@ int lib::first(std::string line, char x) {
     return -1;
 }
 
-// finds the last instance of a char in a string, if no instance then returns the length of
-// the string
+
+// finds the position of the last instance of a smaller string in a string, if no instance then returns -1
+int lib::first(std::string line, std::string x) {
+    if (x.length() <= line.length()){
+        for (int i = 0; i < line.length() - x.length(); i++) {
+            if (line.substr(i, x.length()) == x) {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
+// finds the last instance of a string in a string, if no instance then returns -1
+int lib::last(std::string line, std::string x) {
+    int pos = -1;
+    if (x.length() <= line.length()){
+        for (int i = 0; i < line.length(); i++) {
+            if (line.substr(i, x.length()) == x) {
+                pos = i;
+            }
+        }
+    }
+    return pos;
+}
+
+// finds the last instance of a char in a string, if no instance then returns -1
 int lib::last(std::string line, char x) {
     int pos = -1;
     for (int i = 0; i < line.length(); i++) {

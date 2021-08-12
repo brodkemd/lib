@@ -37,8 +37,11 @@ void lib::write_lines_of_vector_to_file(std::vector<std::string> lines, std::str
 
 }
 
-// copies lines from the input file into the inputted vector, can provide the absolute path of the file
+// copies lines from the input file into the inputted vector, can provide the absolute path of the file, will erase vector that is inputted
 void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::string file_name_or_path){
+
+    // clearing the inputted vector
+    lines.clear();
 
     // instance of library
     lib inst;

@@ -10,10 +10,10 @@ file_handling.o: src/file_handling.cpp
 prints.o: src/prints.cpp
 	g++ -c src/prints.cpp
 
-searching.o:
+searching.o: src/searching.cpp
 	g++ -c src/searching.cpp
 
-main.o:
+main.o:	main.cpp
 	g++ -c main.cpp
 
 clean:

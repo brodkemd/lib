@@ -62,6 +62,8 @@ class lib {
             int first(std::vector<std::string> vars, std::string op);
             int first(std::vector<int> stor, int x);
             int first(std::vector<double> stor, double x);
+            int first(std::string line, std::string x);
+            int last(std::string line, std::string x);
 
             // finds last instance of type in vector
             int last(std::string line, char x);
