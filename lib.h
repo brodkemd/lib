@@ -97,7 +97,7 @@ class lib {
         // in file_handling.cpp
             // file and directory handling
             void opening_error(std::string file_name);
-            void copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::string file);
+            void copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::string file_name_or_path);
             void write_lines_of_vector_to_file(std::vector<std::string> lines, std::string file);
             void write_line_to_file(std::string line, std::string file_name_or_path);
                 // copies the lines from one file to another file
