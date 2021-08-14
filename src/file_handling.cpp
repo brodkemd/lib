@@ -53,7 +53,7 @@ void lib::search_for_and_replace_string_in_file_with_options(std::string file_na
     inst.print("looking");
     inst.print(lines_in_file);
     // searches for and replaces the to_find string with the replacement string in the vector of the file contents
-    inst.search_for_and_replace_string_in_vector_with_options(lines_in_file, "he", "she", 2);
+    inst.search_for_and_replace_string_in_vector_with_options(lines_in_file, "he", "she", false, false, 2);
     
     inst.print("writing");
     // writes the changed lines back to the file

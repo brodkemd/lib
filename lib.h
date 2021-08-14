@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <chrono>
 
 class lib {
     private:
@@ -71,7 +72,8 @@ class lib {
             // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
             // the string, everything after the string, or replace the string itself
             // options: before = 0, after = 1, on = 2
-            void search_for_and_replace_string_in_vector_with_options(std::vector<std::string>& lines, std::string to_find, std::string replacement, int option);
+            void search_for_and_replace_string_in_vector_with_options(std::vector<std::string>& lines, std::string to_find, std::string replacement, 
+                                                                        bool ignore_case, bool match_case, int how_to_replace);
 
             // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
             // the string, everything after the string, or replace the string itself 

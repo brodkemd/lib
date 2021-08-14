@@ -85,10 +85,20 @@ int lib::first(std::vector<double> stor, double x) {
 // options: before = 0, after = 1, on = 2
 void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::string>& lines, 
                                                             std::string to_find, 
-                                                            std::string replacement, 
-                                                            int option){
+                                                            std::string replacement,
+                                                            bool ignore_case,
+                                                            bool match_case, 
+                                                            int how_to_replace){
     // instance of library
     lib inst;
+
+    if (match_case){
+        ignore_case = true;
+    }
+    
+    if (ignore_case){
+        inst.to_upper(to_find);
+    }
     
     // informing the user what is happening
     //inst.print("searching for replacement");
@@ -100,6 +110,9 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
     for (std::string& line : lines){
 
         //inst.print("Line in vector: " + line);
+        if (ignore_case){
+            inst.to_upper(line);
+        }
 
         // checking to make sure the element is large than what is needs to be found
         if(line.length() >= to_find.length()){
@@ -125,7 +138,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                     //inst.print("found the string to replace: " + to_find);
 
                     // determining where to put the replacement string depending where the user specified
-                    switch (option)
+                    switch (how_to_replace)
                     {
                     // if the replacement string needs to placed after the string that was found
                     case 1:
@@ -177,3 +190,53 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
         }
     }
 }
+
+// do not use this unless neccessary, it is 75 times slower than the one above you
+/*
+void search(std::string line, std::string to_find){
+  if (to_find.length() < line.length()){    
+    int middle_r;
+    int middle_l;
+
+    if (line.length() % 2 == 0){
+      middle_l = line.length() / 2;
+      middle_r = (line.length() / 2 - 1);
+    }
+    else { 
+      middle_l = floor(line.length() / 2);
+      middle_r = middle_l;
+    }
+
+    for (int i = 0; i < ceil(line.length() / 4); i++){
+      if (to_find[0] == line[i]) {
+        if (line.substr(i, to_find.length()) == to_find){
+          std::cout << "got one" << std::endl;;
+        }
+      }
+
+      if (to_find[0] == line[middle_l - i]){
+        if(line.substr(middle_l - i, to_find.length()) == to_find){
+          std::cout << "got one" << std::endl;
+        }
+      }
+
+      if (to_find[0] == line[middle_r + i]){
+        if(line.substr(middle_r + i, to_find.length()) == to_find){
+          std::cout << "got one" << std::endl;
+        }
+      }
+      if (to_find[to_find.length() - 1] == line[line.length() - 1 - i]){
+        if(line.substr(line.length() - 1 - i - (to_find.length() - 1), to_find.length()) == to_find){
+          std::cout << "got one" << std::endl;
+        }
+      }
+    }
+  }
+  else if (to_find.length() == line.length()){
+    if (to_find == line){
+        std::cout << "got one" << std::endl;
+    }
+  }
+
+}
+*/
