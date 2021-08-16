@@ -80,6 +80,39 @@ int lib::first(std::vector<double> stor, double x) {
 }
 
 
+// returns 0 if it is not a char that has case, 1 if it is lower case, and 2 if it is upper case
+int lib::determine_case_of_char(char x){
+    lib inst;
+    if (inst.first(inst.lower_alphabet(), x) != -1) {
+        return 1;
+    }
+    else if (inst.first(inst.upper_alphabet(), x) != -1) {
+        return 2;
+    }
+    else {
+        return 0;
+    }
+}
+
+void lib::match_case_of_strings(std::string to_match_case, std::string to_change_case){
+    lib inst;
+    double slope = (to_change_case.length() - 1) / (to_match_case.length() - 1);
+    int case_of_char;
+    double pos;
+
+    int upper_case_in_string[to_match_case.length()];
+
+    for (int i = 0; i < to_match_case.length(); i++){
+        case_of_char = inst.determine_case_of_char(to_match_case[i]);
+        upper_case_in_string[i] = case_of_char;
+    }
+
+    for (int j = 0; j < to_match_case.length(); j++){
+        if (upper_case_in_string[i])
+    }
+}
+
+
 // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
 // the string, everything after the string, or replace the string itself 
 // options: before = 0, after = 1, on = 2
@@ -91,6 +124,8 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                                                             int how_to_replace){
     // instance of library
     lib inst;
+
+    std::string line_before_change;
 
     if (match_case){
         ignore_case = true;
@@ -111,6 +146,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
 
         //inst.print("Line in vector: " + line);
         if (ignore_case){
+            line_before_change = line;
             inst.to_upper(line);
         }
 
@@ -133,7 +169,10 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
 
                 // if the substring is what needs to be found
                 if(temp == to_find){
-
+                    
+                    if (match_case){
+                        inst.me
+                    }
                     // informing the use
                     //inst.print("found the string to replace: " + to_find);
 

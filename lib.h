@@ -65,6 +65,8 @@ class lib {
             int first(std::vector<double> stor, double x);
             int first(std::string line, std::string x);
             int last(std::string line, std::string x);
+            void match_case_of_strings(std::string to_match_case, std::string to_change_case);
+            int determine_case_of_char(char x);
 
             // finds last instance of type in vector
             int last(std::string line, char x);

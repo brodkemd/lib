@@ -40,6 +40,7 @@ void lib::write_lines_of_vector_to_file(std::vector<std::string> lines, std::str
 // the string, everything after the string, or replace the string itself 
 // options: before = 0, after = 1, on = 2
 void lib::search_for_and_replace_string_in_file_with_options(std::string file_name_or_path, std::string to_find, std::string replacement, int option){
+    
     // instance of this library
     lib inst;
     
