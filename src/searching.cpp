@@ -135,7 +135,6 @@ void lib::match_case_of_strings(std::string to_match_case, std::string& to_chang
             break;
         }
     }
-
     switch (count)
     {
     case 0:
@@ -148,11 +147,13 @@ void lib::match_case_of_strings(std::string to_match_case, std::string& to_chang
         // if there was one upper case letters in the to_match_case string, then the first letter in the 
         // to_change_case to converted to upper case
         inst.to_upper(to_change_case[position_of_first_letter_in_to_change_case]);
+        break;
     
     case 2:
         // if there was more than one upper case letter in the to_match_case string, all of the letters in
         // to_change_case are converted to upper case
         inst.to_upper(to_change_case);
+        break;
 
     }
 }
@@ -215,9 +216,22 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                 // if the substring is what needs to be found
                 if(temp == to_find){
                     
-                    if (match_case){
-                        inst.match_case_of_strings(line_before_change.substr(i, to_find.length()), replacement);
+                    // if case does not matter
+                    if (ignore_case){
+                        
+                        // reseting the line back to its original state
+                        line = line_before_change;
+
+                        // if the user wants the strings to have matching case
+                        if (match_case){
+                            // calling a function that matches the case of the two strings
+                            inst.match_case_of_strings(line.substr(i, to_find.length()), replacement);
+                            
+                            //inst.print("replacement: " + replacement);
+
+                        }
                     }
+                    
                     
                     // informing the use
                     //inst.print("found the string to replace: " + to_find);
