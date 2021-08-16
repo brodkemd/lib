@@ -65,6 +65,9 @@ class lib {
             int first(std::vector<double> stor, double x);
             int first(std::string line, std::string x);
             int last(std::string line, std::string x);
+            void match_case_of_strings(std::string to_match_case, std::string& to_change_case);
+            int determine_case_of_char(char x);
+            int find_first_letter_in_string (std::string line);
 
             // finds last instance of type in vector
             int last(std::string line, char x);
@@ -95,6 +98,9 @@ class lib {
 
             // runs the inputted string as a command in terminal
             void run_command(std::string command);
+            void to_lower(std::string& line);
+            void to_lower(char& x);
+            void to_upper(char& x);
 
         // in file_handling.cpp
             // file and directory handling

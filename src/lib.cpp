@@ -87,12 +87,44 @@ void lib::rm_space(std::string& Line) {
 
 // converts string to upper case
 void lib::to_upper(std::string& line){
-    std::string alphabet_upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    lib inst;
     for(char& it : line){
-        for(char letter : alphabet_upper_case){
+        for(char letter : inst.param_upper_alphabet){
             if(std::tolower(letter) == it){
                 it = letter;
             }
+        }
+    }
+} 
+
+// converts char to upper case
+void lib::to_upper(char& x){
+    lib inst;
+    for(char letter : inst.param_upper_alphabet){
+        if(std::tolower(letter) == x){
+            x = letter;
+        }
+    }
+} 
+
+// converts string to lower case
+void lib::to_lower(std::string& line){
+    lib inst;
+    for(char& it : line){
+        for(char letter : inst.param_lower_alphabet){
+            if(std::toupper(letter) == it){
+                it = letter;
+            }
+        }
+    }
+} 
+
+// converts char to lower case
+void lib::to_lower(char& x){
+    lib inst;
+    for(char letter : inst.param_lower_alphabet){
+        if(std::toupper(letter) == x){
+            x = letter;
         }
     }
 } 
