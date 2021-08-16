@@ -200,9 +200,9 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
         if(line.length() >= to_find.length()){
             
             // iterating through the element
-            for (int i = 0; i < ((line.length() -1) - to_find.length()); i++){
+            for (int i = 0; i <= ((line.length()) - to_find.length()); i++){
                 
-                if ((i + line.length() - 1) < line.length()){
+                if ((i + to_find.length() - 1) < line.length()){
                     // assigning substring of the line that is the same length as the string that needs to be found
                     temp = line.substr(i, to_find.length());
                 }

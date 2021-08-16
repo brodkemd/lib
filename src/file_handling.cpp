@@ -191,6 +191,19 @@ void lib::make_these_files(std::vector<std::string> files_to_make){
     inst.run_command(make_command);
 }
 
+// makes the files listed in the inputted vector
+void lib::make_these_files(std::string files_to_make){
+    // instance of this library
+    lib inst;
+
+    // string that stores the names of the files along with the bash command
+    std::string make_command = "touch ";
+    make_command += files_to_make;
+
+    // running the make command
+    inst.run_command(make_command);
+}
+
 // removes the files listed in the inputted vector
 void lib::remove_these_files(std::vector<std::string> files_to_remove){
     // instance of this library
@@ -227,6 +240,18 @@ void lib::make_these_directories(std::vector<std::string> directories_to_make){
     inst.run_command(make_command);
 }
 
+// makes the directories listed in the inputted vector
+void lib::make_these_directories(std::string directories_to_make){
+    // instance of this library
+    lib inst;
+
+    // string that stores the names of the files along with the bash command
+    std::string make_command = "mkdir " + directories_to_make;
+
+    // running the make command
+    inst.run_command(make_command);
+}
+
 // removes the directories listed in the inputted vector
 void lib::remove_these_directories(std::vector<std::string> directories_to_remove){
     // instance of this library
@@ -234,6 +259,18 @@ void lib::remove_these_directories(std::vector<std::string> directories_to_remov
 
     // string that stores the names of the files along with the bash command
     std::string remove_command = "rm -r " + inst.vector_to_string(directories_to_remove, true);
+
+    // running the remove command
+    inst.run_command(remove_command);
+}
+
+// removes the directories listed in the inputted vector
+void lib::remove_these_directories(std::string directories_to_remove){
+    // instance of this library
+    lib inst;
+
+    // string that stores the names of the files along with the bash command
+    std::string remove_command = "rm -r " + directories_to_remove;
 
     // running the remove command
     inst.run_command(remove_command);

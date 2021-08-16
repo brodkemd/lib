@@ -112,10 +112,13 @@ class lib {
             void copy_lines_from_one_file_to_another(std::string source_file_name, std::string destination_file_name);
             void copy_contents_from_one_directory_to_another(std::string source_directory_name_or_path, std::string destination_directory_name_or_path);
             void make_these_files(std::vector<std::string> files_to_make);
+            void make_these_files(std::string files_to_make);
             void remove_these_files(std::vector<std::string> files_to_remove);
             void remove_these_files(std::string files_to_remove);
             void make_these_directories(std::vector<std::string> directories_to_make);
+            void make_these_directories(std::string directories_to_make);
             void remove_these_directories(std::vector<std::string> directories_to_remove);
+            void remove_these_directories(std::string directories_to_remove);
 
             // returns file name
             std::string copy_file_to_cur_dir_to_open (std::string absolute_path);
