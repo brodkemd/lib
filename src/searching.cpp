@@ -28,7 +28,7 @@ int lib::first(std::string line, std::string x) {
 int lib::last(std::string line, std::string x) {
     int pos = -1;
     if (x.length() <= line.length()){
-        for (int i = 0; i < line.length(); i++) {
+        for (int i = 0; i < (line.length() - x.length()); i++) {
             if (line.substr(i, x.length()) == x) {
                 pos = i;
             }
@@ -83,32 +83,77 @@ int lib::first(std::vector<double> stor, double x) {
 // returns 0 if it is not a char that has case, 1 if it is lower case, and 2 if it is upper case
 int lib::determine_case_of_char(char x){
     lib inst;
+    // if the char is lower case, returns a 1
     if (inst.first(inst.lower_alphabet(), x) != -1) {
         return 1;
     }
+    // if the char is uppercase, returns a 2
     else if (inst.first(inst.upper_alphabet(), x) != -1) {
         return 2;
     }
+    // if the char is not a letter it returns 0
     else {
         return 0;
     }
 }
 
-void lib::match_case_of_strings(std::string to_match_case, std::string to_change_case){
+// finds the first letter in a string
+int lib::find_first_letter_in_string (std::string line){
     lib inst;
-    double slope = (to_change_case.length() - 1) / (to_match_case.length() - 1);
-    int case_of_char;
-    double pos;
-
-    int upper_case_in_string[to_match_case.length()];
-
-    for (int i = 0; i < to_match_case.length(); i++){
-        case_of_char = inst.determine_case_of_char(to_match_case[i]);
-        upper_case_in_string[i] = case_of_char;
+    int i = 0;
+    // while the char in the string is not a member of the upper or lower case alphabet the int is incremented
+    while (inst.first(inst.param_upper_alphabet, line[i]) == -1 && inst.first(inst.param_lower_alphabet, line[i]) == -1){
+        i++;
     }
 
-    for (int j = 0; j < to_match_case.length(); j++){
-        if (upper_case_in_string[i])
+    return i;
+}
+
+// currently only supports if the beginning of a string is capitalized or the while thing
+void lib::match_case_of_strings(std::string to_match_case, std::string& to_change_case){
+    // instance of this library
+    lib inst;
+
+    // finds the index of the first letter in to_match_case
+    int position_of_first_letter_in_to_match_case = inst.find_first_letter_in_string(to_match_case);
+    
+    // finds the index of the first letter in to_change_case
+    int position_of_first_letter_in_to_change_case = inst.find_first_letter_in_string(to_change_case);
+    
+    // varible that holds how many uppercase letters there are in the to_match_case string
+    int count = 0;
+
+    // iterates through the to_match_case string starting at the position of the first letter
+    for (int i = position_of_first_letter_in_to_match_case; i < to_match_case.length(); i++){
+        // if the char in the string it upper case
+        if (inst.determine_case_of_char(to_match_case[i]) == 2) {
+            count++;
+        }
+
+        // if there are two upper case letters in the string then the for loop is exiteds
+        if (count == 2){
+            break;
+        }
+    }
+
+    switch (count)
+    {
+    case 0:
+        // if there were no upper case letters in the to_match_case string, then the to_change_case string
+        // is converted to all lower case
+        inst.to_lower(to_change_case);
+        break;
+    
+    case 1:
+        // if there was one upper case letters in the to_match_case string, then the first letter in the 
+        // to_change_case to converted to upper case
+        inst.to_upper(to_change_case[position_of_first_letter_in_to_change_case]);
+    
+    case 2:
+        // if there was more than one upper case letter in the to_match_case string, all of the letters in
+        // to_change_case are converted to upper case
+        inst.to_upper(to_change_case);
+
     }
 }
 
@@ -171,8 +216,9 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                 if(temp == to_find){
                     
                     if (match_case){
-                        inst.me
+                        inst.match_case_of_strings(line_before_change.substr(i, to_find.length()), replacement);
                     }
+                    
                     // informing the use
                     //inst.print("found the string to replace: " + to_find);
 
