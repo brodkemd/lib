@@ -36,6 +36,7 @@ void lib::write_lines_of_vector_to_file(std::vector<std::string> lines, std::str
     write.close();
 
 }
+/*
 // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
 // the string, everything after the string, or replace the string itself 
 // options: before = 0, after = 1, on = 2
@@ -60,7 +61,7 @@ void lib::search_for_and_replace_string_in_file_with_options(std::string file_na
     // writes the changed lines back to the file
     inst.write_lines_of_vector_to_file(lines_in_file, file_name_or_path);
 }
-
+*/
 // copies lines from the input file into the inputted vector, can provide the absolute path of the file, will erase vector that is inputted
 void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::string file_name_or_path){
 

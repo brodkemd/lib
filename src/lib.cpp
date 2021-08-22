@@ -1,6 +1,10 @@
 #include "../lib.h"
 
-// runs the inputted string as a command in terminal
+/*
+** inputs: a string
+** outputs: NONE
+** Decription: runs the inputted string in the terminal
+*/  
 void lib::run_command(std::string command){
     // determining the size of the command char* from the size of the string
     int n = command.length();
@@ -21,7 +25,12 @@ void lib::run_command(std::string command){
     std::system(char_array);
 }
 
-// turns a vector of strings into one continuous string, can choose to have spaces inbetween the indicies of the vector, true if you want spaces
+/*
+** inputs: vector of strings, a bool (indicates whether you want a space after each element in a vector, true if so)
+** outputs: a string
+** Decription: turns a vector of strings into one continuous string and returns the continuous string, can choose to 
+** have spaces inbetween the indicies of the vector
+*/
 std::string lib::vector_to_string(std::vector<std::string> to_convert, bool spaces){
     // string that is returned
     std::string output;
@@ -39,8 +48,33 @@ std::string lib::vector_to_string(std::vector<std::string> to_convert, bool spac
     return output;
 }
 
-// converting functions
-// converts int to char
+/*
+** inputs: a char
+** outputs: an int that represents the case of a char, if 0 is returned if it is not a char that has case, 1 if it is lower case, 
+** and 2 if it is upper case
+** Decription: Determines case of char
+*/ 
+int lib::determine_case_of_char(char x){
+    lib inst;
+    // if the char is lower case, returns a 1
+    if (inst.first(inst.lower_alphabet, x) != -1) {
+        return 1;
+    }
+    // if the char is uppercase, returns a 2
+    else if (inst.first(inst.upper_alphabet, x) != -1) {
+        return 2;
+    }
+    // if the char is not a letter it returns 0
+    else {
+        return 0;
+    }
+}
+
+/*
+** inputs: an int (0 to 9)
+** outputs: a char
+** Decription: turns the inputted int (0 to 9) to a char representation (0 to 9)
+*/ 
 char lib::con(int x) {
     char y[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     int i = 0;
@@ -50,7 +84,11 @@ char lib::con(int x) {
     return y[i];
 }
 
-// converts char to int
+/*
+** inputs: a char (charaters 0 to 9 only)
+** outputs: an int
+** Decription: turns the int in character form back into integer form
+*/  
 int lib::con(char x) {
     char y[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     int i = 0;
@@ -60,6 +98,12 @@ int lib::con(char x) {
     return i;
 }
 
+/*
+** inputs: a double (the number), a double the tolerance on that number, the number that the first double must be less than the tolerance
+** away from
+** outputs: a bool (whether the number was within the tolerance of the goal double, true if it was within the tolerance)
+** Decription: determines whether a number is within a tolerance of another number
+*/   
 bool lib::within_tol(double num, double tol, double goal){
     if(abs(abs(num) - abs(goal)) < tol){
         return true;
@@ -67,7 +111,12 @@ bool lib::within_tol(double num, double tol, double goal){
     return false;
 }
 
-// removes spaces
+
+/*
+** inputs: a string passed by reference
+** outputs: NONE
+** Decription: removes all the spaces in the inputted string
+*/ 
 void lib::rm_space(std::string& Line) {
     std::string temp;
 
@@ -85,11 +134,15 @@ void lib::rm_space(std::string& Line) {
     Line = temp;
 }
 
-// converts string to upper case
+/*
+** inputs: a string 
+** outputs: NONE
+** Decription: converts all of the characters in the string to upper case
+*/
 void lib::to_upper(std::string& line){
     lib inst;
     for(char& it : line){
-        for(char letter : inst.param_upper_alphabet){
+        for(char letter : inst.upper_alphabet){
             if(std::tolower(letter) == it){
                 it = letter;
             }
@@ -97,21 +150,29 @@ void lib::to_upper(std::string& line){
     }
 } 
 
-// converts char to upper case
+/*
+** inputs: a char 
+** outputs: NONE
+** Decription: converts the inputted char to upper case
+*/
 void lib::to_upper(char& x){
     lib inst;
-    for(char letter : inst.param_upper_alphabet){
+    for(char letter : inst.upper_alphabet){
         if(std::tolower(letter) == x){
             x = letter;
         }
     }
 } 
 
-// converts string to lower case
+/*
+** inputs: a string 
+** outputs: NONE
+** Decription: converts all of the characters in the string to lower case
+*/ 
 void lib::to_lower(std::string& line){
     lib inst;
     for(char& it : line){
-        for(char letter : inst.param_lower_alphabet){
+        for(char letter : inst.lower_alphabet){
             if(std::toupper(letter) == it){
                 it = letter;
             }
@@ -119,10 +180,14 @@ void lib::to_lower(std::string& line){
     }
 } 
 
-// converts char to lower case
+/*
+** inputs: a char 
+** outputs: NONE
+** Decription: converts the inputted char to lower case
+*/  
 void lib::to_lower(char& x){
     lib inst;
-    for(char letter : inst.param_lower_alphabet){
+    for(char letter : inst.lower_alphabet){
         if(std::toupper(letter) == x){
             x = letter;
         }

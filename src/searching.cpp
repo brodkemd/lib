@@ -1,7 +1,10 @@
 #include "../lib.h"
 
-// finds the position of the first instance of a char in a string, if no instance then returns the length of
-// the string
+/*
+** inputs: a string and a char
+** outputs: an int that represents an index in the string
+** Decription: searches through a string and returns the index of the first occurence of a char in a string
+*/
 int lib::first(std::string line, char x) {
     for (int i = 0; i < line.length(); i++) {
         if (line[i] == x) {
@@ -12,7 +15,53 @@ int lib::first(std::string line, char x) {
 }
 
 
-// finds the position of the last instance of a smaller string in a string, if no instance then returns -1
+/*
+** inputs: a vector of strings and a string
+** outputs: an int that represents an index in the vector of strings
+** Decription: searches through a vector and returns the index of the first row in the list that equals the inputted string
+*/
+int lib::first(std::vector<std::string> vars, std::string op) {
+    for (int j = 0; j < vars.size(); j++) {
+        if (vars[j] == op) {
+            return j;
+        }
+    }
+    return -1;
+}
+
+/*
+** inputs: a vector of ints and an int
+** outputs: an int that represents an index in the vector of ints
+** Decription: searches through a vector and returns the index of the first row in the list that equals the inputted int
+*/ 
+int lib::first(std::vector<int> stor, int x) {
+    for (int y = 0; y < stor.size(); y ++) {
+        if (stor[y] == x) {
+            return y;
+        }
+    }
+    return -1;
+}
+
+/*
+** inputs: a vector of doubles and a double
+** outputs: an int that represents an index in the vector of doubles
+** Decription: searches through a vector and returns the index of the first row in the list that equals the inputted double
+*/ 
+int lib::first(std::vector<double> stor, double x) {
+    for (int y = 0; y < stor.size(); y ++) {
+        if (stor[y] == x) {
+            return y;
+        }
+    }
+    return -1;
+}
+
+/*
+** inputs: a string and a string
+** outputs: an int that represents an index in the string named line
+** Decription: searches through a string and returns the index of the beginning of the first string that equals the inputted string named x
+*/
 int lib::first(std::string line, std::string x) {
     if (x.length() <= line.length()){
         for (int i = 0; i < line.length() - x.length(); i++) {
@@ -24,7 +73,11 @@ int lib::first(std::string line, std::string x) {
     return -1;
 }
 
-// finds the last instance of a string in a string, if no instance then returns -1
+/*
+** inputs: a string and a string
+** outputs: an int that represents an index in the string named line
+** Decription: searches through a string and returns the index of the beginning of the last string that equals the inputted string named x
+*/
 int lib::last(std::string line, std::string x) {
     int pos = -1;
     if (x.length() <= line.length()){
@@ -37,7 +90,11 @@ int lib::last(std::string line, std::string x) {
     return pos;
 }
 
-// finds the last instance of a char in a string, if no instance then returns -1
+/*
+** inputs: a string and a char
+** outputs: an int that represents an index in the string named line
+** Decription: searches through a string and returns the index of the last char that equals the inputted char named x
+*/
 int lib::last(std::string line, char x) {
     int pos = -1;
     for (int i = 0; i < line.length(); i++) {
@@ -48,68 +105,13 @@ int lib::last(std::string line, char x) {
     return pos;
 }
 
-// finds first instance of a string in a vector of strings, if no instance then returns the number
-// of elements in the vector
-int lib::first(std::vector<std::string> vars, std::string op) {
-    for (int j = 0; j < vars.size(); j++) {
-        if (vars[j] == op) {
-            return j;
-        }
-    }
-    return -1;
-}
-
-// returns if there is an int with the same value in the vector
-int lib::first(std::vector<int> stor, int x) {
-    for (int y = 0; y < stor.size(); y ++) {
-        if (stor[y] == x) {
-            return y;
-        }
-    }
-    return -1;
-}
-
-// returns if there is an int with the same value in the vector
-int lib::first(std::vector<double> stor, double x) {
-    for (int y = 0; y < stor.size(); y ++) {
-        if (stor[y] == x) {
-            return y;
-        }
-    }
-    return -1;
-}
-
-
-// returns 0 if it is not a char that has case, 1 if it is lower case, and 2 if it is upper case
-int lib::determine_case_of_char(char x){
-    lib inst;
-    // if the char is lower case, returns a 1
-    if (inst.first(inst.lower_alphabet(), x) != -1) {
-        return 1;
-    }
-    // if the char is uppercase, returns a 2
-    else if (inst.first(inst.upper_alphabet(), x) != -1) {
-        return 2;
-    }
-    // if the char is not a letter it returns 0
-    else {
-        return 0;
-    }
-}
-
-// finds the first letter in a string
-int lib::find_first_letter_in_string (std::string line){
-    lib inst;
-    int i = 0;
-    // while the char in the string is not a member of the upper or lower case alphabet the int is incremented
-    while (inst.first(inst.param_upper_alphabet, line[i]) == -1 && inst.first(inst.param_lower_alphabet, line[i]) == -1){
-        i++;
-    }
-
-    return i;
-}
-
-// currently only supports if the beginning of a string is capitalized or the while thing
+/*
+** inputs: a string and a string
+** outputs: NONE
+** Decription: the inputted string named to_match_case contains the desired cases for its chars and the string named to_change_case has
+** the cases of its chars changed to match that of the string name to_match_case 
+** Note: This function will only capitalize all of the chars or the first one currently
+*/  
 void lib::match_case_of_strings(std::string to_match_case, std::string& to_change_case){
     // instance of this library
     lib inst;
@@ -159,6 +161,34 @@ void lib::match_case_of_strings(std::string to_match_case, std::string& to_chang
 }
 
 
+/*
+** inputs: a string
+** outputs: an int 
+** Decription: returns an int that represents index of the first letter in a string
+*/
+int lib::find_first_letter_in_string (std::string line){
+    lib inst;
+    int i = 0;
+    // while the char in the string is not a member of the upper or lower case alphabet the int is incremented
+    while (inst.first(inst.upper_alphabet, line[i]) == -1 && inst.first(inst.lower_alphabet, line[i]) == -1){
+        i++;
+    }
+
+    return i;
+}
+
+
+
+/*
+** inputs in order: a vector of strings, a string that is what you want to find in the vector, a string that you will replace what you find with,
+** a bool that indicates if case matter matters or not (true if it does matter), a bool that indicates if you want the replacement string
+** to match the case of the string that it found, and an int that indicates what you the replacement string to replace (0 if you want the replacement string
+** to replace beginning of element in the vector up to the found string, 1 if you want to replace everything after the found string in the element of the vector,
+** 2 if you want to replace the found string in the element of the vector)
+** outputs: NONE
+** Decription: replaces the instance of the string named to_find in every string in the vector with the string named replacement in the previously lsited
+** ways, case can be ignored or matched be the string being replaced and the string that is the replacement
+*/
 // searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
 // the string, everything after the string, or replace the string itself 
 // options: before = 0, after = 1, on = 2
