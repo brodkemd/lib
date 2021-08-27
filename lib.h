@@ -1,6 +1,7 @@
 #ifndef LIB_H
 #define LIB_H
 
+// common includes that I use
 #include <cmath>
 #include <algorithm>
 #include <iostream>
@@ -13,16 +14,26 @@
 #include <stdio.h>
 #include <chrono>
 
+// class that contains all of the functions and constants
 class lib {
     private:
-        // constants used often
+        // the mathematical constant pi
         const double pi = 3.14159265358979323846;
+
+        // the mathematical constant e
         const double e = 2.71828182845904523536;
+
+        // lower case version of the alphabet
         const std::string lower_alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+        // upper case version of the alphabet
         const std::string upper_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public:
-        // Source file: prints.cpp
+        /*
+        ** Source file: prints.cpp
+        ** prints many different types of things to the terminal
+        */
             /*
             ** inputs: a string
             ** outputs: NONE
@@ -110,7 +121,10 @@ class lib {
             */
             void print(std::vector<std::vector<int>> in);
         
-        // Source file: seraching.cpp
+        /*
+        ** Source file: seraching.cpp
+        ** functions that search and find things in various lists
+        */
             /*
             ** inputs: a string and a char
             ** outputs: an int that represents an index in the string
@@ -194,7 +208,10 @@ class lib {
             // options: before = 0, after = 1, on = 2
             // void search_for_and_replace_string_in_file_with_options(std::string file_name_or_path, std::string to_find, std::string replacement, int option);
 
-        // Source file: lib.cpp
+        /* 
+        ** Source file: lib.cpp
+        ** A bunch of functions that accomplish random tasks
+        */
             /*
             ** inputs: a string
             ** outputs: NONE
@@ -275,44 +292,120 @@ class lib {
             */  
             void to_lower(char& x);
 
-        // Source file: file_handling.cpp
-            // file and directory handling
-            
+        /*
+        **Source file: file_handling.cpp
+        ** cotains functions primarily for file and directory handling
+        */ 
+            /*
+            ** inputs: a string that represents a name of file
+            ** outputs: NONE
+            ** Decription: prints "Error opening: FILE_NAME" to terminal
+            */
             void opening_error(std::string file_name);
             
+            /*
+            ** inputs: a vector of strings that the lines of the file will be copied into, a string that represents the name of file you want the lines from 
+            ** outputs: since the vector is passed by reference the vector is the output, NOTE: the vector is cleared when it is passed
+            ** Decription: copies the lines of the file with the passed in name into the vector, accepts absolute path
+            */
             void copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::string file_name_or_path);
             
+            /*
+            ** inputs: a vector of strings that each of element represents a line that will be written to the file, a string that represents the name of file
+            ** you want the lines to be written to 
+            ** outputs: the elements of the vector are written to the output file
+            ** Decription: writes the contents of the vector to the file with the inputted name, NOTE: the lines of the file are erased, accepts absolute path
+            */
             void write_lines_of_vector_to_file(std::vector<std::string> lines, std::string file);
             
+            /*
+            ** inputs: a string that represents the line that will be written to the file, a string that represents the name of file
+            ** you want the lines to be written to 
+            ** outputs: the string is written to the output file
+            ** Decription: writes a string to the file with the inputted name, NOTE: the lines of the file are erased, accepts absolute path
+            */
             void write_line_to_file(std::string line, std::string file_name_or_path);
-                // copies the lines from one file to another file
             
+            /*
+            ** inputs: a string that represents the name of the file to pull the lines from, a string that represents the name of the file to write the lines
+            ** of the other file too
+            ** outputs: a file with the lines of the other file, NOTE: the vector is cleared when it is passed
+            ** Decription: copies the lines of the first file passed in to the second file passed in, accepts absolute path
+            */
             void copy_lines_from_one_file_to_another(std::string source_file_name, std::string destination_file_name);
             
+            /*
+            ** inputs: a string that represents the name of the directory to pull the files from, a string that represents the name of the directory to files into
+            ** of the other file too
+            ** outputs: a directory with the contents of the other directory in it
+            ** Decription: copies the contents of the first directory passed in to the second directory passed in, accepts absolute path
+            */
             void copy_contents_from_one_directory_to_another(std::string source_directory_name_or_path, std::string destination_directory_name_or_path);
             
+            /*
+            ** inputs: a vector of strings where each element represents the a name of the file you want to make
+            ** outputs: makes the files that you passed in
+            ** Decription: makes files with the names listed in the passed in vector, accepts absolute path
+            */
             void make_these_files(std::vector<std::string> files_to_make);
             
+            /*
+            ** inputs: a string that represents the name of the file that you want to make
+            ** outputs: a new file with the name that you passed in
+            ** Decription: makes a file with the passed in name, accepts absolute path
+            */
             void make_these_files(std::string files_to_make);
             
+            /*
+            ** inputs: a vector of strings where each element represents the a name of the file you want to remove
+            ** outputs: removes the files that you passed in
+            ** Decription: removes files with the names listed in the passed in vector, accepts absolute path
+            */
             void remove_these_files(std::vector<std::string> files_to_remove);
             
+            /*
+            ** inputs: a string that represents the name of the file that you want to remove
+            ** outputs: a removed file
+            ** Decription: removes a file with the passed in name, accepts absolute path
+            */
             void remove_these_files(std::string files_to_remove);
             
+            /*
+            ** inputs: a vector of strings where each element represents the a name of the directory you want to make
+            ** outputs: makes the directories that you passed in
+            ** Decription: makes directories with the names listed in the passed in vector, accepts absolute path
+            */
             void make_these_directories(std::vector<std::string> directories_to_make);
             
+            /*
+            ** inputs: a string that represents the name of the directory that you want to make
+            ** outputs: a new directory with the name that you passed in
+            ** Decription: makes a directory with the passed in name, accepts absolute path
+            */
             void make_these_directories(std::string directories_to_make);
             
+            /*
+            ** inputs: a vector of strings where each element represents the a name of the directory you want to remove
+            ** outputs: removes the directories that you passed in
+            ** Decription: removes directories with the names listed in the passed in vector, accepts absolute path
+            */
             void remove_these_directories(std::vector<std::string> directories_to_remove);
             
+            /*
+            ** inputs: a string that represents the name of the directory that you want to remove
+            ** outputs: a removed directory
+            ** Decription: removes a directory with the passed in name, accepts absolute path
+            */
             void remove_these_directories(std::string directories_to_remove);
 
+            // not used
+            /*
             // returns file name
             std::string copy_file_to_cur_dir_to_open (std::string absolute_path);
 
             // copies file back to the directory it came from
             void copy_file_back_to_original_directory (std::string absolute_path);  
-
+            */
 
 };
 

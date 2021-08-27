@@ -200,8 +200,9 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                                                             int how_to_replace){
     // instance of library
     lib inst;
-
-    std::string line_before_change;
+    
+    // temporary variable to store substrings of an element of the inputted vector
+    std::string line_before_change, temp;
 
     if (match_case){
         ignore_case = true;
@@ -213,9 +214,6 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
     
     // informing the user what is happening
     //inst.print("searching for replacement");
-    
-    // temporary variable to store substrings of an element of the inputted vector
-    std::string temp;
 
     // iterates through all the elements of the vector
     for (std::string& line : lines){

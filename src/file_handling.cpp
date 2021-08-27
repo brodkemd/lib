@@ -1,68 +1,19 @@
 #include "../lib.h"
 
-// prints whether there was an error opening a file or not
+/*
+** inputs: a string that represents a name of file
+** outputs: NONE
+** Decription: prints "Error opening: FILE_NAME" to terminal
+*/
 void lib::opening_error(std::string file_name){
     std::cout << "Error opening: " << file_name << std::endl;
 }
 
-// writes each column in the inputted vector to a line in the file with name that is also inputted, can provide the absolute path of the file
-void lib::write_lines_of_vector_to_file(std::vector<std::string> lines, std::string file_name_or_path){
-
-    // instance of library
-    lib inst;
-
-    // informing the user what is happening
-    //inst.print("writing lines to file: " + file_name_or_path);
-
-    std::ofstream write;
-
-    // opening the file
-    write.open(file_name_or_path);
-
-    // making sure the file open
-    if(write.is_open()){
-        // iterates through the elements of the vector and appends a \n to end the line, then writes the line to file
-        for(std::string line : lines){
-            line += "\n";
-            write << line;
-        }
-    }
-    else{
-        // if the file fails to open inform the user and stop the program
-        opening_error(file_name_or_path);
-    }
-
-    // closing the file
-    write.close();
-
-}
 /*
-// searches for a string in a vector of strings and replaces it with what you want it to, it can replace everything before
-// the string, everything after the string, or replace the string itself 
-// options: before = 0, after = 1, on = 2
-void lib::search_for_and_replace_string_in_file_with_options(std::string file_name_or_path, std::string to_find, std::string replacement, int option){
-    
-    // instance of this library
-    lib inst;
-    
-    // vector to store contents of file
-    std::vector<std::string> lines_in_file;
-
-    inst.print("copying");
-    // copies the lines of a file into a vector
-    inst.copy_lines_of_file_to_vector(lines_in_file, file_name_or_path);
-
-    inst.print("looking");
-    inst.print(lines_in_file);
-    // searches for and replaces the to_find string with the replacement string in the vector of the file contents
-    inst.search_for_and_replace_string_in_vector_with_options(lines_in_file, "he", "she", false, false, 2);
-    
-    inst.print("writing");
-    // writes the changed lines back to the file
-    inst.write_lines_of_vector_to_file(lines_in_file, file_name_or_path);
-}
+** inputs: a vector of strings that the lines of the file will be copied into, a string that represents the name of file you want the lines from 
+** outputs: since the vector is passed by reference the vector is the output, NOTE: the vector is cleared when it is passed
+** Decription: copies the lines of the file with the passed in name into the vector, accepts absolute path
 */
-// copies lines from the input file into the inputted vector, can provide the absolute path of the file, will erase vector that is inputted
 void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::string file_name_or_path){
 
     // clearing the inputted vector
@@ -102,7 +53,50 @@ void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::str
     read.close();
 }
 
-// writes the inputted string to the file with name that is also inputted, can provide the absolute path of the file
+/*
+** inputs: a vector of strings that each of element represents a line that will be written to the file, a string that represents the name of file
+** you want the lines to be written to 
+** outputs: the elements of the vector are written to the output file
+** Decription: writes the contents of the vector to the file with the inputted name, NOTE: the lines of the file are erased, accepts absolute path
+*/
+void lib::write_lines_of_vector_to_file(std::vector<std::string> lines, std::string file_name_or_path){
+
+    // instance of library
+    lib inst;
+
+    // informing the user what is happening
+    //inst.print("writing lines to file: " + file_name_or_path);
+
+    std::ofstream write;
+
+    // opening the file
+    write.open(file_name_or_path);
+
+    // making sure the file open
+    if(write.is_open()){
+        // iterates through the elements of the vector and appends a \n to end the line, then writes the line to file
+        for(std::string line : lines){
+            line += "\n";
+            write << line;
+        }
+    }
+    else{
+        // if the file fails to open inform the user and stop the program
+        opening_error(file_name_or_path);
+    }
+
+    // closing the file
+    write.close();
+
+}
+
+            
+/*
+** inputs: a string that represents the line that will be written to the file, a string that represents the name of file
+** you want the lines to be written to 
+** outputs: the string is written to the output file
+** Decription: writes a string to the file with the inputted name, NOTE: the lines of the file are erased, accepts absolute path
+*/
 void lib::write_line_to_file(std::string line, std::string file_name_or_path){
 
     // instance of library
@@ -132,7 +126,12 @@ void lib::write_line_to_file(std::string line, std::string file_name_or_path){
 }
 
 
-// copies the lines from one file to another file
+/*
+** inputs: a string that represents the name of the file to pull the lines from, a string that represents the name of the file to write the lines
+** of the other file too
+** outputs: a file with the lines of the other file, NOTE: the vector is cleared when it is passed
+** Decription: copies the lines of the first file passed in to the second file passed in, accepts absolute path
+*/
 void lib::copy_lines_from_one_file_to_another(std::string source_file_name, std::string destination_file_name){
     // empty vectors to store the lines from each file
     std::vector<std::string> lines_in_source_file;
@@ -148,7 +147,12 @@ void lib::copy_lines_from_one_file_to_another(std::string source_file_name, std:
 
 }
 
-// copies the contents of one directory to another
+/*
+** inputs: a string that represents the name of the directory to pull the files from, a string that represents the name of the directory to files into
+** of the other file too
+** outputs: a directory with the contents of the other directory in it
+** Decription: copies the contents of the first directory passed in to the second directory passed in, accepts absolute path
+*/
 void lib::copy_contents_from_one_directory_to_another(std::string source_directory_name_or_path, std::string destination_directory_name_or_path){
     // instance of this library
     lib inst;
@@ -179,7 +183,11 @@ void lib::copy_contents_from_one_directory_to_another(std::string source_directo
 
 }
 
-// makes the files listed in the inputted vector
+/*
+** inputs: a vector of strings where each element represents the a name of the file you want to make
+** outputs: makes the files that you passed in
+** Decription: makes files with the names listed in the passed in vector, accepts absolute path
+*/
 void lib::make_these_files(std::vector<std::string> files_to_make){
     // instance of this library
     lib inst;
@@ -192,7 +200,11 @@ void lib::make_these_files(std::vector<std::string> files_to_make){
     inst.run_command(make_command);
 }
 
-// makes the files listed in the inputted vector
+/*
+** inputs: a string that represents the name of the file that you want to make
+** outputs: a new file with the name that you passed in
+** Decription: makes a file with the passed in name, accepts absolute path
+*/
 void lib::make_these_files(std::string files_to_make){
     // instance of this library
     lib inst;
@@ -205,7 +217,11 @@ void lib::make_these_files(std::string files_to_make){
     inst.run_command(make_command);
 }
 
-// removes the files listed in the inputted vector
+/*
+** inputs: a vector of strings where each element represents the a name of the file you want to remove
+** outputs: removes the files that you passed in
+** Decription: removes files with the names listed in the passed in vector, accepts absolute path
+*/
 void lib::remove_these_files(std::vector<std::string> files_to_remove){
     // instance of this library
     lib inst;
@@ -217,7 +233,11 @@ void lib::remove_these_files(std::vector<std::string> files_to_remove){
     inst.run_command(remove_command);
 }
 
-// removes the files listed in the inputted vector
+/*
+** inputs: a string that represents the name of the file that you want to remove
+** outputs: a removed file
+** Decription: removes a file with the passed in name, accepts absolute path
+*/
 void lib::remove_these_files(std::string files_to_remove){
     // instance of this library
     lib inst;
@@ -229,7 +249,11 @@ void lib::remove_these_files(std::string files_to_remove){
     inst.run_command(remove_command);
 }
 
-// makes the directories listed in the inputted vector
+/*
+** inputs: a vector of strings where each element represents the a name of the directory you want to make
+** outputs: makes the directories that you passed in
+** Decription: makes directories with the names listed in the passed in vector, accepts absolute path
+*/
 void lib::make_these_directories(std::vector<std::string> directories_to_make){
     // instance of this library
     lib inst;
@@ -241,7 +265,11 @@ void lib::make_these_directories(std::vector<std::string> directories_to_make){
     inst.run_command(make_command);
 }
 
-// makes the directories listed in the inputted vector
+/*
+** inputs: a string that represents the name of the directory that you want to make
+** outputs: a new directory with the name that you passed in
+** Decription: makes a directory with the passed in name, accepts absolute path
+*/
 void lib::make_these_directories(std::string directories_to_make){
     // instance of this library
     lib inst;
@@ -253,7 +281,11 @@ void lib::make_these_directories(std::string directories_to_make){
     inst.run_command(make_command);
 }
 
-// removes the directories listed in the inputted vector
+/*
+** inputs: a vector of strings where each element represents the a name of the directory you want to remove
+** outputs: removes the directories that you passed in
+** Decription: removes directories with the names listed in the passed in vector, accepts absolute path
+*/
 void lib::remove_these_directories(std::vector<std::string> directories_to_remove){
     // instance of this library
     lib inst;
@@ -265,7 +297,11 @@ void lib::remove_these_directories(std::vector<std::string> directories_to_remov
     inst.run_command(remove_command);
 }
 
-// removes the directories listed in the inputted vector
+/*
+** inputs: a string that represents the name of the directory that you want to remove
+** outputs: a removed directory
+** Decription: removes a directory with the passed in name, accepts absolute path
+*/
 void lib::remove_these_directories(std::string directories_to_remove){
     // instance of this library
     lib inst;
@@ -277,6 +313,8 @@ void lib::remove_these_directories(std::string directories_to_remove){
     inst.run_command(remove_command);
 }
 
+// not used
+/*
 // copies the file from the absolute path to the directory of the executing code, returns the the file name
 std::string lib::copy_file_to_cur_dir_to_open (std::string absolute_path) {
     // instance of library
@@ -359,3 +397,4 @@ void lib::copy_file_back_to_original_directory (std::string absolute_path) {
 
 
 }
+*/
