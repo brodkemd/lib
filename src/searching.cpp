@@ -208,21 +208,24 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
         ignore_case = true;
     }
     
+    /*
     if (ignore_case){
         inst.to_upper(to_find);
     }
-    
+    */
     // informing the user what is happening
     //inst.print("searching for replacement");
 
     // iterates through all the elements of the vector
     for (std::string& line : lines){
-
+        
+        /*
         //inst.print("Line in vector: " + line);
         if (ignore_case){
             line_before_change = line;
             inst.to_upper(line);
         }
+        */
 
         // checking to make sure the element is large than what is needs to be found
         if(line.length() >= to_find.length()){
@@ -239,74 +242,66 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
 
                 }
 
-                //inst.print("Temp: " + temp);
-
-                // if the substring is what needs to be found
-                if(temp == to_find){
+                if (ignore_case){
+                    if (inst.to_upper(temp) != inst.to_upper(to_find)) continue;
+                }
+                else if(temp != to_find) continue;
                     
-                    // if case does not matter
-                    if (ignore_case){
-                        
-                        // reseting the line back to its original state
-                        line = line_before_change;
 
-                        // if the user wants the strings to have matching case
-                        if (match_case){
-                            // calling a function that matches the case of the two strings
-                            inst.match_case_of_strings(line.substr(i, to_find.length()), replacement);
-                            
-                            //inst.print("replacement: " + replacement);
+                // if the user wants the strings to have matching case
+                if (match_case){
+                    // calling a function that matches the case of the two strings
+                    inst.match_case_of_strings(line.substr(i, to_find.length()), replacement);
+                    
+                    //inst.print("replacement: " + replacement);
 
-                        }
+                }
+            
+                
+                // informing the use
+                //inst.print("found the string to replace: " + to_find);
+
+                // determining where to put the replacement string depending where the user specified
+                switch (how_to_replace)
+                {
+                // if the replacement string needs to placed after the string that was found
+                case 1:
+                    // adding neccessary string// inserting the replacement string directly after the string that was found
+                    for (int j = 0; j < replacement.length(); j++){
+                        line.push_back(replacement[j]);
                     }
                     
-                    
+                    break;
+
+                // if the replacement string needs to be replaced before the string that was found
+                case 0:
                     // informing the use
-                    //inst.print("found the string to replace: " + to_find);
+                    //inst.print("inserting at the beginning");
 
-                    // determining where to put the replacement string depending where the user specified
-                    switch (how_to_replace)
-                    {
-                    // if the replacement string needs to placed after the string that was found
-                    case 1:
-                       // adding neccessary string// inserting the replacement string directly after the string that was found
-                        for (int j = 0; j < replacement.length(); j++){
-                            line.push_back(replacement[j]);
-                        }
-                        
-                        break;
+                    // erasing all characters that come before the string that was found
+                    line.erase(line.begin(), line.begin() + i);
 
-                    // if the replacement string needs to be replaced before the string that was found
-                    case 0:
-                        // informing the use
-                        //inst.print("inserting at the beginning");
-
-                        // erasing all characters that come before the string that was found
-                        line.erase(line.begin(), line.begin() + i);
-
-                        // inserting the replacement string directly in front of the string that was found
-                        for (int j = 0; j < replacement.length(); j++){
-                            line.insert(line.begin(), replacement[j]);
-                        }
-                        
-                        break;
-
-                    // if the replacement string needs to replace the string that was found
-                    case 2:
-                        // informing the user
-                        //inst.print("inserting by replacing");
-
-                        // erasing the string that was found
-                        line.erase(line.begin() + i, line.begin() + i + to_find.length());
-
-                        // inserting the replacement string in the found string's place
-                        for (int j = 0; j < replacement.length(); j++){
-                            line.insert(line.begin() + i + j, replacement[j]);
-                        }
-
-                        break;
+                    // inserting the replacement string directly in front of the string that was found
+                    for (int j = 0; j < replacement.length(); j++){
+                        line.insert(line.begin(), replacement[j]);
                     }
                     
+                    break;
+
+                // if the replacement string needs to replace the string that was found
+                case 2:
+                    // informing the user
+                    //inst.print("inserting by replacing");
+
+                    // erasing the string that was found
+                    line.erase(line.begin() + i, line.begin() + i + to_find.length());
+
+                    // inserting the replacement string in the found string's place
+                    for (int j = 0; j < replacement.length(); j++){
+                        line.insert(line.begin() + i + j, replacement[j]);
+                    }
+
+                    break;
                 }
             }
         }

@@ -25,6 +25,25 @@ void lib::run_command(std::string command){
     std::system(char_array);
 }
 
+
+/*
+** inputs: a charcter array that represents a command for the terminal
+** outputs: returns the output of the command from the terminal
+** Decription: runs the inputted character array in the terminal and returns the output of the command from the terminal
+*/ 
+std::string run_command_and_get_output(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
+}
+
 /*
 ** inputs: vector of strings, a bool (indicates whether you want a space after each element in a vector, true if so)
 ** outputs: a string
@@ -139,6 +158,7 @@ void lib::rm_space(std::string& Line) {
 ** outputs: NONE
 ** Decription: converts all of the characters in the string to upper case
 */
+/*
 void lib::to_upper(std::string& line){
     lib inst;
     for(char& it : line){
@@ -148,6 +168,24 @@ void lib::to_upper(std::string& line){
             }
         }
     }
+} 
+*/
+
+/*
+** inputs: a string 
+** outputs: the inputted string but with all chararaters in uppercase
+** Decription: converts all of the characters in the string to upper case
+*/
+std::string lib::to_upper(std::string line){
+    lib inst;
+    for(char& it : line){
+        for(char letter : inst.upper_alphabet){
+            if(std::tolower(letter) == it){
+                it = letter;
+            }
+        }
+    }
+    return line;
 } 
 
 /*

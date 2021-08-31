@@ -13,6 +13,10 @@
 #include <string.h>
 #include <stdio.h>
 #include <chrono>
+#include <cstdio>
+#include <memory>
+#include <stdexcept>
+#include <array>
 
 // class that contains all of the functions and constants
 class lib {
@@ -218,6 +222,13 @@ class lib {
             ** Decription: runs the inputted string in the terminal
             */  
             void run_command(std::string command);
+
+            /*
+            ** inputs: a charcter array that represents a command for the terminal
+            ** outputs: returns the output of the command from the terminal
+            ** Decription: runs the inputted character array in the terminal and returns the output of the command from the terminal
+            */ 
+            std::string run_command_and_get_output(const char* cmd);
             
             /*
             ** inputs: vector of strings, a bool (indicates whether you want a space after each element in a vector, true if so)
@@ -266,10 +277,10 @@ class lib {
 
             /*
             ** inputs: a string 
-            ** outputs: NONE
+            ** outputs: the inputted string but with all chararaters in uppercase
             ** Decription: converts all of the characters in the string to upper case
-            */  
-            void to_upper(std::string& line);
+            */
+            std::string to_upper(std::string line);
 
             /*
             ** inputs: a char 
