@@ -74,13 +74,13 @@ std::string lib::vector_to_string(std::vector<std::string> to_convert, bool spac
 ** Decription: Determines case of char
 */ 
 int lib::determine_case_of_char(char x){
-    lib inst;
+
     // if the char is lower case, returns a 1
-    if (inst.first(inst.lower_alphabet, x) != -1) {
+    if (lib::first(lib::lower_alphabet, x) != -1) {
         return 1;
     }
     // if the char is uppercase, returns a 2
-    else if (inst.first(inst.upper_alphabet, x) != -1) {
+    else if (lib::first(lib::upper_alphabet, x) != -1) {
         return 2;
     }
     // if the char is not a letter it returns 0
@@ -162,7 +162,7 @@ void lib::rm_space(std::string& Line) {
 void lib::to_upper(std::string& line){
     lib inst;
     for(char& it : line){
-        for(char letter : inst.upper_alphabet){
+        for(char letter : lib::upper_alphabet){
             if(std::tolower(letter) == it){
                 it = letter;
             }
@@ -177,9 +177,9 @@ void lib::to_upper(std::string& line){
 ** Decription: converts all of the characters in the string to upper case
 */
 std::string lib::to_upper(std::string line){
-    lib inst;
+
     for(char& it : line){
-        for(char letter : inst.upper_alphabet){
+        for(char letter : lib::upper_alphabet){
             if(std::tolower(letter) == it){
                 it = letter;
             }
@@ -194,8 +194,8 @@ std::string lib::to_upper(std::string line){
 ** Decription: converts the inputted char to upper case
 */
 void lib::to_upper(char& x){
-    lib inst;
-    for(char letter : inst.upper_alphabet){
+
+    for(char letter : lib::upper_alphabet){
         if(std::tolower(letter) == x){
             x = letter;
         }
@@ -208,9 +208,9 @@ void lib::to_upper(char& x){
 ** Decription: converts all of the characters in the string to lower case
 */ 
 void lib::to_lower(std::string& line){
-    lib inst;
+
     for(char& it : line){
-        for(char letter : inst.lower_alphabet){
+        for(char letter : lib::lower_alphabet){
             if(std::toupper(letter) == it){
                 it = letter;
             }
@@ -224,8 +224,8 @@ void lib::to_lower(std::string& line){
 ** Decription: converts the inputted char to lower case
 */  
 void lib::to_lower(char& x){
-    lib inst;
-    for(char letter : inst.lower_alphabet){
+
+    for(char letter : lib::lower_alphabet){
         if(std::toupper(letter) == x){
             x = letter;
         }
@@ -379,7 +379,7 @@ void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::str
     lib inst;
 
     // letting use know what is happening
-    //inst.print("Copying lines from: " + file_name_or_path);
+    //lib::print("Copying lines from: " + file_name_or_path);
 
     std::ifstream read;
     
@@ -416,7 +416,7 @@ void lib::write_lines_to_file(std::vector<std::string> lines, std::string file_n
     lib inst;
 
     // informing the user what is happening
-    inst.print("writing lines to file: " + file_name_or_path);
+    lib::print("writing lines to file: " + file_name_or_path);
 
     std::ofstream write;
 
@@ -448,7 +448,7 @@ void lib::write_line_to_file(std::string line, std::string file_name_or_path){
     lib inst;
 
     // informing the user what is happening
-    inst.print("writing lines to file: " + file_name_or_path);
+    lib::print("writing lines to file: " + file_name_or_path);
 
     std::ofstream write;
 
@@ -481,10 +481,10 @@ void lib::copy_lines_from_one_file_to_another(std::string source_file_name, std:
     lib inst;
 
     // copies lines of the source file to its corresponding vector
-    inst.copy_lines_of_file_to_vector(lines_in_source_file, source_file_name);
+    lib::copy_lines_of_file_to_vector(lines_in_source_file, source_file_name);
 
     // writes the lines of the source file to the destination file
-    inst.write_lines_to_file(lines_in_source_file, destination_file_name);
+    lib::write_lines_to_file(lines_in_source_file, destination_file_name);
 
 }
 
@@ -504,7 +504,7 @@ void lib::copy_contents_from_one_directory_to_another(std::string source_directo
     
     // determines if a path was provided, if not it adds .. which gives a relative path for the copy command
     // determines this by essentially checking to see if there is a / before directory name
-    if ((inst.first(destination_directory_name_or_path, '/') == destination_directory_name_or_path.length() - 1) || (inst.first(destination_directory_name_or_path, '/') == -1)){
+    if ((lib::first(destination_directory_name_or_path, '/') == destination_directory_name_or_path.length() - 1) || (lib::first(destination_directory_name_or_path, '/') == -1)){
         // adding the ../ to the beginning of destination directory variable
         destination_directory_name_or_path.insert(0, "../");
     }
@@ -512,10 +512,10 @@ void lib::copy_contents_from_one_directory_to_another(std::string source_directo
     // adding rest of copy command
     copy_command += destination_directory_name_or_path;
 
-    inst.print("this is the copy command: " + copy_command);
+    lib::print("this is the copy command: " + copy_command);
 
     // running the copy command
-    inst.run_command(copy_command);
+    lib::run_command(copy_command);
 
 }
 
@@ -525,10 +525,10 @@ void lib::make_these_files(std::vector<std::string> files_to_make){
     lib inst;
 
     // string that stores the names of the files along with the bash command
-    std::string make_command = "touch " + inst.vector_to_string(files_to_make, true);
+    std::string make_command = "touch " + lib::vector_to_string(files_to_make, true);
 
     // running the make command
-    inst.run_command(make_command);
+    lib::run_command(make_command);
 }
 
 // removes the files listed in the inputted vector
@@ -537,10 +537,10 @@ void lib::remove_these_files(std::vector<std::string> files_to_remove){
     lib inst;
 
     // string that stores the names of the files along with the bash command
-    std::string remove_command = "rm " + inst.vector_to_string(files_to_remove, true);
+    std::string remove_command = "rm " + lib::vector_to_string(files_to_remove, true);
 
     // running the remove command
-    inst.run_command(remove_command);
+    lib::run_command(remove_command);
 }
 
 // makes the directories listed in the inputted vector
@@ -549,10 +549,10 @@ void lib::make_these_directories(std::vector<std::string> directories_to_make){
     lib inst;
 
     // string that stores the names of the files along with the bash command
-    std::string make_command = "mkdir " + inst.vector_to_string(directories_to_make, true);
+    std::string make_command = "mkdir " + lib::vector_to_string(directories_to_make, true);
 
     // running the make command
-    inst.run_command(make_command);
+    lib::run_command(make_command);
 }
 
 // removes the directories listed in the inputted vector
@@ -561,10 +561,10 @@ void lib::remove_these_directories(std::vector<std::string> directories_to_remov
     lib inst;
 
     // string that stores the names of the files along with the bash command
-    std::string remove_command = "rm -r " + inst.vector_to_string(directories_to_remove, true);
+    std::string remove_command = "rm -r " + lib::vector_to_string(directories_to_remove, true);
 
     // running the remove command
-    inst.run_command(remove_command);
+    lib::run_command(remove_command);
 }
 */
 
@@ -579,7 +579,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
     lib inst;
     
     // informing the user what is happening
-    //inst.print("searching for replacement");
+    //lib::print("searching for replacement");
     
     // temporary variable to store substrings of an element of the inputted vector
     std::string temp;
@@ -590,7 +590,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
     // iterates through all the elements of the vector
     for (std::string& line : lines){
 
-        //inst.print("Line in vector: " + line);
+        //lib::print("Line in vector: " + line);
 
         // checking to make sure the element is large than what is needs to be found
         if(line.length() >= to_find.length()){
@@ -601,13 +601,13 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                 // assigning substring of the line that is the same length as the string that needs to be found
                 temp = line.substr(i, to_find.length());
 
-                //inst.print("Temp: " + temp);
+                //lib::print("Temp: " + temp);
 
                 // if the substring is what needs to be found
                 if(temp == to_find){
 
                     // informing the use
-                    //inst.print("found the string to replace: " + to_find);
+                    //lib::print("found the string to replace: " + to_find);
                     
                     // setting bool so after this iteration all loops will be exited
                     //exit = true;
@@ -627,7 +627,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                     // if the replacement string needs to be replaced before the string that was found
                     case 0:
                         // informing the use
-                        //inst.print("inserting at the beginning");
+                        //lib::print("inserting at the beginning");
 
                         // erasing all characters that come before the string that was found
                         line.erase(line.begin(), line.begin() + i);
@@ -642,7 +642,7 @@ void lib::search_for_and_replace_string_in_vector_with_options(std::vector<std::
                     // if the replacement string needs to replace the string that was found
                     case 2:
                         // informing the user
-                        //inst.print("inserting by replacing");
+                        //lib::print("inserting by replacing");
 
                         // erasing the string that was found
                         line.erase(line.begin() + i, line.begin() + i + to_find.length());
@@ -683,7 +683,7 @@ std::string lib::copy_file_to_cur_dir_to_open (std::string absolute_path) {
     std::string file_name;
 
     // checks to make sure the file does not exist in the current directory by looking for the / in the file name
-    if (inst.first(absolute_path, '/') != -1){
+    if (lib::first(absolute_path, '/') != -1){
         // making a shell script file because it is easier to do it that way
         std::system("touch temp.sh");
 
@@ -703,7 +703,7 @@ std::string lib::copy_file_to_cur_dir_to_open (std::string absolute_path) {
         input.push_back(temp);
 
         // running the string the terminal
-        inst.write_lines_to_file(input, "temp.sh");
+        lib::write_lines_to_file(input, "temp.sh");
 
         // running the shell script
         std::system("bash temp.sh");
@@ -712,7 +712,7 @@ std::string lib::copy_file_to_cur_dir_to_open (std::string absolute_path) {
         std::system("rm temp.sh");
 
         // finds last index of / to deternmine the file name
-        int pos = inst.last(absolute_path, '/');
+        int pos = lib::last(absolute_path, '/');
 
         // finding the name of the file from the path
         file_name = absolute_path.substr(pos + 1, absolute_path.length() - (pos + 1));
@@ -736,7 +736,7 @@ void lib::copy_file_back_to_original_directory (std::string absolute_path) {
     lib inst;
     
     // finds last index of / to deternmine the file name
-    int pos = inst.last(absolute_path, '/');
+    int pos = lib::last(absolute_path, '/');
 
     // finding the name of the file from the path
     std::string file_name = absolute_path.substr(pos + 1, absolute_path.length() - (pos + 1));
@@ -772,7 +772,7 @@ void lib::copy_file_back_to_original_directory (std::string absolute_path) {
     std::system("touch temp.sh");
 
     // running the string the terminal
-    inst.write_lines_to_file(input, "temp.sh");
+    lib::write_lines_to_file(input, "temp.sh");
 
     // running the shell script
     std::system("bash temp.sh");

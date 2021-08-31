@@ -19,11 +19,8 @@ void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::str
     // clearing the inputted vector
     lines.clear();
 
-    // instance of library
-    lib inst;
-
     // letting use know what is happening
-    //inst.print("Copying lines from: " + file_name_or_path);
+    //lib::print("Copying lines from: " + file_name_or_path);
 
     std::ifstream read;
     
@@ -61,11 +58,8 @@ void lib::copy_lines_of_file_to_vector(std::vector<std::string>& lines, std::str
 */
 void lib::write_lines_of_vector_to_file(std::vector<std::string> lines, std::string file_name_or_path){
 
-    // instance of library
-    lib inst;
-
     // informing the user what is happening
-    //inst.print("writing lines to file: " + file_name_or_path);
+    //lib::print("writing lines to file: " + file_name_or_path);
 
     std::ofstream write;
 
@@ -99,11 +93,8 @@ void lib::write_lines_of_vector_to_file(std::vector<std::string> lines, std::str
 */
 void lib::write_line_to_file(std::string line, std::string file_name_or_path){
 
-    // instance of library
-    lib inst;
-
     // informing the user what is happening
-    inst.print("writing lines to file: " + file_name_or_path);
+    lib::print("writing lines to file: " + file_name_or_path);
 
     std::ofstream write;
 
@@ -136,14 +127,11 @@ void lib::copy_lines_from_one_file_to_another(std::string source_file_name, std:
     // empty vectors to store the lines from each file
     std::vector<std::string> lines_in_source_file;
 
-    // instance of this library
-    lib inst;
-
     // copies lines of the source file to its corresponding vector
-    inst.copy_lines_of_file_to_vector(lines_in_source_file, source_file_name);
+    lib::copy_lines_of_file_to_vector(lines_in_source_file, source_file_name);
 
     // writes the lines of the source file to the destination file
-    inst.write_lines_of_vector_to_file(lines_in_source_file, destination_file_name);
+    lib::write_lines_of_vector_to_file(lines_in_source_file, destination_file_name);
 
 }
 
@@ -154,8 +142,6 @@ void lib::copy_lines_from_one_file_to_another(std::string source_file_name, std:
 ** Decription: copies the contents of the first directory passed in to the second directory passed in, accepts absolute path
 */
 void lib::copy_contents_from_one_directory_to_another(std::string source_directory_name_or_path, std::string destination_directory_name_or_path){
-    // instance of this library
-    lib inst;
 
     //string that holds the commands to be excuted by the kernal
     std::string copy_command;
@@ -168,7 +154,7 @@ void lib::copy_contents_from_one_directory_to_another(std::string source_directo
     
     // determines if a path was provided, if not it adds .. which gives a relative path for the copy command
     // determines this by essentially checking to see if there is a / before directory name
-    if ((inst.first(destination_directory_name_or_path, '/') == destination_directory_name_or_path.length() - 1) || (inst.first(destination_directory_name_or_path, '/') == -1)){
+    if ((lib::first(destination_directory_name_or_path, '/') == destination_directory_name_or_path.length() - 1) || (lib::first(destination_directory_name_or_path, '/') == -1)){
         // adding the ../ to the beginning of destination directory variable
         destination_directory_name_or_path.insert(0, "../");
     }
@@ -176,10 +162,10 @@ void lib::copy_contents_from_one_directory_to_another(std::string source_directo
     // adding rest of copy command
     copy_command += destination_directory_name_or_path;
 
-    inst.print("this is the copy command: " + copy_command);
+    lib::print("this is the copy command: " + copy_command);
 
     // running the copy command
-    inst.run_command(copy_command);
+    lib::run_command(copy_command);
 
 }
 
@@ -189,15 +175,13 @@ void lib::copy_contents_from_one_directory_to_another(std::string source_directo
 ** Decription: makes files with the names listed in the passed in vector, accepts absolute path
 */
 void lib::make_these_files(std::vector<std::string> files_to_make){
-    // instance of this library
-    lib inst;
 
     // string that stores the names of the files along with the bash command
     std::string make_command = "touch ";
-    make_command += inst.vector_to_string(files_to_make, true);
+    make_command += lib::vector_to_string(files_to_make, true);
 
     // running the make command
-    inst.run_command(make_command);
+    lib::run_command(make_command);
 }
 
 /*
@@ -206,15 +190,13 @@ void lib::make_these_files(std::vector<std::string> files_to_make){
 ** Decription: makes a file with the passed in name, accepts absolute path
 */
 void lib::make_these_files(std::string files_to_make){
-    // instance of this library
-    lib inst;
 
     // string that stores the names of the files along with the bash command
     std::string make_command = "touch ";
     make_command += files_to_make;
 
     // running the make command
-    inst.run_command(make_command);
+    lib::run_command(make_command);
 }
 
 /*
@@ -223,14 +205,12 @@ void lib::make_these_files(std::string files_to_make){
 ** Decription: removes files with the names listed in the passed in vector, accepts absolute path
 */
 void lib::remove_these_files(std::vector<std::string> files_to_remove){
-    // instance of this library
-    lib inst;
 
     // string that stores the names of the files along with the bash command
-    std::string remove_command = "rm " + inst.vector_to_string(files_to_remove, true);
+    std::string remove_command = "rm " + lib::vector_to_string(files_to_remove, true);
 
     // running the remove command
-    inst.run_command(remove_command);
+    lib::run_command(remove_command);
 }
 
 /*
@@ -239,14 +219,12 @@ void lib::remove_these_files(std::vector<std::string> files_to_remove){
 ** Decription: removes a file with the passed in name, accepts absolute path
 */
 void lib::remove_these_files(std::string files_to_remove){
-    // instance of this library
-    lib inst;
 
     // string that stores the names of the files along with the bash command
     std::string remove_command = "rm " + files_to_remove;
 
     // running the remove command
-    inst.run_command(remove_command);
+    lib::run_command(remove_command);
 }
 
 /*
@@ -255,14 +233,12 @@ void lib::remove_these_files(std::string files_to_remove){
 ** Decription: makes directories with the names listed in the passed in vector, accepts absolute path
 */
 void lib::make_these_directories(std::vector<std::string> directories_to_make){
-    // instance of this library
-    lib inst;
 
     // string that stores the names of the files along with the bash command
-    std::string make_command = "mkdir " + inst.vector_to_string(directories_to_make, true);
+    std::string make_command = "mkdir " + lib::vector_to_string(directories_to_make, true);
 
     // running the make command
-    inst.run_command(make_command);
+    lib::run_command(make_command);
 }
 
 /*
@@ -271,14 +247,12 @@ void lib::make_these_directories(std::vector<std::string> directories_to_make){
 ** Decription: makes a directory with the passed in name, accepts absolute path
 */
 void lib::make_these_directories(std::string directories_to_make){
-    // instance of this library
-    lib inst;
 
     // string that stores the names of the files along with the bash command
     std::string make_command = "mkdir " + directories_to_make;
 
     // running the make command
-    inst.run_command(make_command);
+    lib::run_command(make_command);
 }
 
 /*
@@ -287,14 +261,12 @@ void lib::make_these_directories(std::string directories_to_make){
 ** Decription: removes directories with the names listed in the passed in vector, accepts absolute path
 */
 void lib::remove_these_directories(std::vector<std::string> directories_to_remove){
-    // instance of this library
-    lib inst;
 
     // string that stores the names of the files along with the bash command
-    std::string remove_command = "rm -r " + inst.vector_to_string(directories_to_remove, true);
+    std::string remove_command = "rm -r " + lib::vector_to_string(directories_to_remove, true);
 
     // running the remove command
-    inst.run_command(remove_command);
+    lib::run_command(remove_command);
 }
 
 /*
@@ -303,14 +275,12 @@ void lib::remove_these_directories(std::vector<std::string> directories_to_remov
 ** Decription: removes a directory with the passed in name, accepts absolute path
 */
 void lib::remove_these_directories(std::string directories_to_remove){
-    // instance of this library
-    lib inst;
 
     // string that stores the names of the files along with the bash command
     std::string remove_command = "rm -r " + directories_to_remove;
 
     // running the remove command
-    inst.run_command(remove_command);
+    lib::run_command(remove_command);
 }
 
 // not used
@@ -324,7 +294,7 @@ std::string lib::copy_file_to_cur_dir_to_open (std::string absolute_path) {
     std::string file_name;
 
     // checks to make sure the file does not exist in the current directory by looking for the / in the file name
-    if (inst.first(absolute_path, '/') != -1){
+    if (lib::first(absolute_path, '/') != -1){
 
         // declaring neccessary string to be added to the vector
         std::string command = "cp ";
@@ -336,10 +306,10 @@ std::string lib::copy_file_to_cur_dir_to_open (std::string absolute_path) {
         command += " `pwd`";
 
         // running the string in terminal
-        inst.run_command(command);
+        lib::run_command(command);
 
         // finds last index of / to deternmine the file name
-        int pos = inst.last(absolute_path, '/');
+        int pos = lib::last(absolute_path, '/');
 
         // finding the name of the file from the path
         file_name = absolute_path.substr(pos + 1, absolute_path.length() - (pos + 1));
@@ -363,7 +333,7 @@ void lib::copy_file_back_to_original_directory (std::string absolute_path) {
     lib inst;
     
     // finds last index of / to deternmine the file name
-    int pos = inst.last(absolute_path, '/');
+    int pos = lib::last(absolute_path, '/');
 
     // finding the name of the file from the path
     std::string file_name = absolute_path.substr(pos + 1, absolute_path.length() - (pos + 1));
@@ -393,7 +363,7 @@ void lib::copy_file_back_to_original_directory (std::string absolute_path) {
     command += "rm " + file_name;
 
     // running the command in terminal
-    inst.run_command(command);
+    lib::run_command(command);
 
 
 }
