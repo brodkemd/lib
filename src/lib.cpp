@@ -31,7 +31,7 @@ void lib::run_command(std::string command){
 ** outputs: returns the output of the command from the terminal
 ** Decription: runs the inputted character array in the terminal and returns the output of the command from the terminal
 */ 
-std::string run_command_and_get_output(const char* cmd) {
+std::string lib::run_command_and_get_output(const char* cmd) {
     std::array<char, 128> buffer;
     std::string result;
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
