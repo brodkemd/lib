@@ -51,7 +51,7 @@ void lib::print(long in) {
 */
 void lib::print(std::vector<std::string> in) {
     for (std::string it : in) {
-        std::cout << "\t" << it << std::endl;
+        std::cout << it << std::endl;
     }
 }
 
